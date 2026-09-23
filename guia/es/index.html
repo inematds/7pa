@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7 Principios de la Gestión de Agentes de IA — explicado de forma directa</title>
+<meta name="description" content="Los 7 principios de la gestión de agentes de IA en lenguaje directo: intención, contexto, datos, criterio de éxito, autonomía con límites, observación y supervisión humana — y cómo aplicarlos en 5 minutos.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/7pa/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/7pa/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/7pa/guia/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light nav{background:rgba(246,247,249,.85)}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:18px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb);white-space:nowrap}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:16px;font-size:.9rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(226,162,59,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:980px){nav .links a.sec{display:none}}
+  @media(max-width:560px){nav .brand .nm{display:none} nav .links .btn{display:none}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(226,162,59,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:70px 22px}
+  .hero h1{font-size:clamp(2.1rem,5vw,3.3rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.15rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:40ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;display:block}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:44px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:66ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .card .q{margin-top:.8em;padding-top:.8em;border-top:1px dashed var(--line);font-size:.88rem;color:var(--txt)}
+  .card .q b{color:var(--amb);font-family:Sora;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;display:block}
+  .card .pr{margin-top:.6em;font-size:.85rem;color:var(--amb2);font-style:italic}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(226,162,59,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  .flow.old span{opacity:.6}
+  .vs{display:grid;grid-template-columns:90px 1fr;gap:12px;align-items:center;margin:12px 0}
+  .vs .lbl{font-family:Sora;font-weight:800;color:var(--mut);font-size:.9rem} .vs .lbl.amb{color:var(--amb)}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font:.84rem/1.6 "JetBrains Mono",monospace;color:#d6d6e0;white-space:pre-wrap}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)}
+  .step{display:grid;grid-template-columns:46px 1fr;gap:16px;margin-bottom:26px}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 110px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  .phase.hl{background:rgba(226,162,59,.07);border-radius:12px;padding:16px 12px}
+  .quote{font-family:Sora;font-size:clamp(1.2rem,3vw,1.6rem);font-weight:800;text-align:center;max-width:32ch;margin:0 auto}
+  .secret{background:linear-gradient(135deg,rgba(226,162,59,.16),rgba(56,189,248,.06));border:1px solid var(--amb);border-radius:20px;padding:34px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+  .secret h2{font-size:clamp(1.4rem,3.2vw,2rem)}
+  .secret p{color:var(--mut);margin:.6em 0 0;max-width:60ch}
+  @media(max-width:700px){.secret{grid-template-columns:1fr;padding:24px}}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:4px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top">🧭 <span class="nm">7 Principios</span></a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#oque">El cambio</a>
+    <a class="sec" href="#principios">Los 7</a>
+    <a class="sec" href="#autonomia">Autonomía</a>
+    <a class="sec" href="#importa">Lo que importa</a>
+    <a class="sec" href="#guia">Cómo usarlo</a>
+    <a class="sec" href="#segredo">Secreto</a>
+    <span class="lang"><a href="../">PT</a><a href="../en/">EN</a><a class="on" href="./">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <a class="btn" href="../../es/">Armar mi ficha</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">Gestión de agentes de IA · directo al punto</span>
+      <h1>No basta con crear agentes. Hay que <span class="amb">gestionarlos</span>.</h1>
+      <p class="lead">Todo lo que necesitas entender sobre la nueva forma de trabajar con IA, en 7 principios, y una herramienta que aplica los 7 en 5 minutos.</p>
+      <div class="cta">
+        <a class="btn" href="../../es/">🧭 Armar mi Ficha del Agente</a>
+        <a class="btn ghost" href="#oque">Entenderlo en 5 minutos</a>
+      </div>
+    </div>
+    <figure><img src="../assets/banner.jpg" alt="Ficha del Agente: 7 preguntas, tu agente de IA listo y bien gestionado"></figure>
+  </div>
+</header>
+
+<section id="oque"><div class="wrap">
+  <span class="chip">El cambio</span>
+  <h2>La IA dejó de ser una herramienta. Se volvió parte del equipo.</h2>
+  <p class="sub">Antes, usabas la IA para responder preguntas. Ahora puede interpretar lo que quieres, buscar información, ejecutar tareas y entregar un resultado, con más o menos libertad. Eso cambia tu rol.</p>
+  <div class="vs"><div class="lbl">ANTES</div><div class="flow old"><span>Tú</span><span class="arr">→</span><span>ejecutas el proceso</span><span class="arr">→</span><span>resultado</span></div></div>
+  <div class="vs"><div class="lbl amb">AHORA</div><div class="flow"><span>Tú</span><span class="arr">→</span><span>defines la intención</span><span class="arr">→</span><span>organizas el contexto</span><span class="arr">→</span><span>delegas</span><span class="arr">→</span><span>supervisas</span><span class="arr">→</span><span>evalúas</span></div></div>
+  <div class="grid g3" style="margin-top:28px">
+    <div class="card"><h3>🎯 Dices el qué, no el cómo</h3><p>En vez de configurar cada paso, defines el objetivo, qué es un buen resultado, los límites y cuándo está listo. La IA decide parte del camino.</p></div>
+    <div class="card"><h3>🗄️ Los datos son el cimiento</h3><p>El agente es tan bueno como la información que usa. Alguien tiene que decir qué fuente es la oficial y quién manda cuando dos fuentes no coinciden.</p></div>
+    <div class="card"><h3>👔 Te conviertes en gestor</h3><p>Pasas de "hacer la tarea" a "gestionar el sistema que hace la tarea": visión, contexto, juicio, evaluación y corrección.</p></div>
+  </div>
+</div></section>
+
+<section id="principios"><div class="wrap">
+  <span class="chip">Los 7 principios</span>
+  <h2>Un ciclo, no una lista.</h2>
+  <p class="sub">Cada principio responde a una pregunta que le harías a un empleado nuevo. La Ficha del Agente hace exactamente esas preguntas por ti.</p>
+  <div class="flow" style="margin-bottom:26px">
+    <span>1 Intención</span><span class="arr">→</span><span>2 Contexto</span><span class="arr">→</span><span>3 Datos</span><span class="arr">→</span><span>4 Criterio</span><span class="arr">→</span><span>5 Autonomía</span><span class="arr">→</span><span>6 Observación</span><span class="arr">→</span><span>7 Supervisión</span><span class="arr">↺</span>
+  </div>
+  <div class="grid g4">
+    <div class="card"><div class="num">1</div><h3>Intención</h3><p>El agente necesita saber el objetivo, por qué importa y qué resultado se espera. Sin eso, hace la tarea equivocada con eficiencia.</p><div class="q"><b>La pregunta</b>¿Qué quieres quitarte de encima, y por qué?</div><div class="pr">Antes de delegar, define el propósito.</div></div>
+    <div class="card"><div class="num">2</div><h3>Contexto</h3><p>Reglas, ejemplos, historial, estado actual. Pero más contexto no es mejor: lo correcto es el mínimo que genera la mejor decisión.</p><div class="q"><b>La pregunta</b>¿Qué le explicarías el primer día a alguien recién contratado?</div><div class="pr">El menor contexto capaz de la mejor decisión.</div></div>
+    <div class="card"><div class="num">3</div><h3>Datos confiables</h3><p>Fuente oficial, consistencia, actualización, trazabilidad. Dato incorrecto entra, decisión incorrecta sale.</p><div class="q"><b>La pregunta</b>¿De dónde viene la información correcta? ¿Quién manda cuando dos fuentes no coinciden?</div><div class="pr">Ningún agente es mejor que sus datos.</div></div>
+    <div class="card"><div class="num">4</div><h3>Criterio de éxito</h3><p>Métrica, calidad esperada, condición de aceptación, definición de "listo". Sin eso, termina sin resolver.</p><div class="q"><b>La pregunta</b>¿Cómo es un día en que esto salió perfecto?</div><div class="pr">Toda delegación necesita el éxito definido.</div></div>
+    <div class="card"><div class="num">5</div><h3>Autonomía con límites</h3><p>No todos los agentes merecen la misma libertad. Sube por niveles, de N0 a N4, junto con la confianza.</p><div class="q"><b>La pregunta</b>¿Qué nunca puede hacer solo? ¿Cuál es lo peor que puede pasar?</div><div class="pr">La autonomía crece con evidencia y control.</div></div>
+    <div class="card"><div class="num">6</div><h3>Observación y evaluación</h3><p>Registrar resultados, errores, costos, tiempo y decisiones. La ejecución genera evidencia; la evidencia genera aprendizaje.</p><div class="q"><b>La pregunta</b>¿Qué quieres ver para saber si va bien?</div><div class="pr">Lo que no se observa no mejora.</div></div>
+    <div class="card"><div class="num">7</div><h3>Supervisión humana</h3><p>La IA ejecuta dentro de límites, pero la responsabilidad sigue siendo tuya: objetivos, excepciones, correcciones, evolución.</p><div class="q"><b>La pregunta</b>¿Cuándo te llama? ¿Cuándo revisas?</div><div class="pr">Los agentes amplían; no eliminan el juicio.</div></div>
+    <div class="card" style="border-color:var(--amb)"><div class="num">↺</div><h3>Y vuelve al 1</h3><p>Lo que aprendes en la supervisión ajusta la intención, el contexto y las reglas. Así es como agentes aislados se convierten en un sistema de trabajo.</p><div class="q"><b>La suma</b>Personas + Procesos + Agentes</div></div>
+  </div>
+</div></section>
+
+<section id="autonomia"><div class="wrap">
+  <span class="chip">Principio 5 en detalle</span>
+  <h2>La escalera de la autonomía</h2>
+  <p class="sub">A más libertad, más control. El agente empieza bajo y sube cuando demuestra, con evidencia, que se lo merece.</p>
+  <div class="phase"><div class="tag">N0</div><div class="d"><strong>Consulta</strong><span>Responde e investiga. No actúa en nada.</span></div></div>
+  <div class="phase"><div class="tag">N1</div><div class="d"><strong>Recomienda</strong><span>Prepara borradores y sugerencias. Tú decides qué usar.</span></div></div>
+  <div class="phase hl"><div class="tag">N2</div><div class="d"><strong>Prepara, tú apruebas</strong><span>Deja todo listo, pero nada sale sin tu OK. El nivel correcto siempre que haya dinero, una acción irreversible o gente externa.</span></div></div>
+  <div class="phase"><div class="tag">N3</div><div class="d"><strong>Ejecuta</strong><span>Lo hace solo, dentro de las reglas, y rinde cuentas. Solo para tareas internas y reversibles.</span></div></div>
+  <div class="phase"><div class="tag">N4</div><div class="d"><strong>Gestiona procesos</strong><span>Lleva todo un proceso, con informes y alarmas. Exige la supervisión más fuerte.</span></div></div>
+  <pre style="margin-top:22px"><span class="c"># La regla que usa la Ficha del Agente para calcular tu nivel</span>
+<span class="k">¿Involucra dinero, una acción irreversible o gente externa?</span>  → máximo N2 (tú apruebas)
+<span class="k">¿Es interno y reversible?</span>                                    → puede llegar a N3
+<span class="k">¿Solo busca información o hace borradores?</span>                    → N0 / N1
+<span class="k">¿No tiene fuente oficial definida?</span>                            → se queda en N1, sin excepción</pre>
+</div></section>
+
+<section id="importa"><div class="wrap">
+  <span class="chip">Lo que realmente importa</span>
+  <h2>Quitando el marketing, queda esto.</h2>
+  <p class="sub">Los informes sobre "la nueva era de los agentes" vienen cargados de capa promocional. No es un descubrimiento exclusivo de ninguna empresa: es la consolidación de lo que ya funciona en la práctica. Después del filtro, quedan 5 verdades.</p>
+  <div class="grid g3">
+    <div class="card"><h3>1 · Datos confiables</h3><p>El agente encuentra conflictos y duplicados, pero quien decide qué información tiene autoridad es la organización.</p></div>
+    <div class="card"><h3>2 · Automatización por intención</h3><p>Tú indicas objetivo, contexto, restricciones, criterios y resultado esperado. El sistema elige parte del camino.</p></div>
+    <div class="card"><h3>3 · Éxito explícito</h3><p>No basta con decir qué hacer. Hay que decir qué es bueno, cómo medirlo y cuándo está realmente terminado.</p></div>
+    <div class="card"><h3>4 · Límites</h3><p>Permisos, niveles de autonomía, revisión humana, monitoreo, políticas y seguridad. Más autonomía, más control.</p></div>
+    <div class="card"><h3>5 · El cuello de botella cambió</h3><p>La dificultad ya no es ejecutar. Es definir bien la intención, crear contexto, organizar datos, evaluar y corregir.</p></div>
+    <div class="card"><h3>+ La demo no es producción</h3><p>Funcionar en una demostración no prueba nada. En uso real importa la estabilidad, la repetición, la seguridad y cómo reacciona ante lo inesperado.</p></div>
+  </div>
+  <p class="quote" style="margin-top:44px">La nueva disciplina no es "usar IA".<br>Es <span class="amb">Gestión de Agentes de IA</span>.</p>
+</div></section>
+
+<section id="guia"><div class="wrap">
+  <span class="chip">Guía de uso · Ficha del Agente</span>
+  <h2>Aplica los 7 principios en 5 minutos</h2>
+  <p class="sub">La Ficha del Agente es una página gratuita que funciona en tu navegador. No se envía nada a ningún lado. Tú respondes, ella arma.</p>
+
+  <div class="step"><div class="b">1</div><div>
+    <h3>Abre la Ficha y elige un punto de partida</h3>
+    <p>Haz clic en un ejemplo listo (clínica, tienda, despacho contable, docente) y ajústalo a tu caso, o empieza en blanco.</p>
+    <a class="btn" href="../../es/">Abrir la Ficha del Agente</a>
+  </div></div>
+
+  <div class="step"><div class="b">2</div><div>
+    <h3>Responde las 7 preguntas, una por pantalla</h3>
+    <p>Escribe como le hablarías a una persona. Cada campo tiene un ejemplo. En la pregunta 5, marca si la tarea involucra dinero, una acción irreversible o gente externa.</p>
+  </div></div>
+
+  <div class="step"><div class="b">3</div><div>
+    <h3>Recibe el paquete listo</h3>
+    <p>Son 4 pestañas: la <b>Ficha</b> (resumen de los 7 principios de tu agente), la <b>Instrucción lista</b> (para pegar en ChatGPT, Claude o Gemini), las <b>3 pruebas</b> y el <b>Checklist</b> de supervisión. Arriba, el nivel de autonomía calculado y qué falta para subir.</p>
+<pre><span class="c"># fragmento de una instrucción generada</span>
+## Tu nivel de autonomía: N2 (Prepara, tú apruebas)
+Preparas todo, pero NADA se envía, cambia o ejecuta
+sin mi aprobación explícita. Muéstrame siempre antes y espera mi "OK".</pre>
+  </div></div>
+
+  <div class="step"><div class="b">4</div><div>
+    <h3>Prueba antes de confiar</h3>
+    <p>Corre las 3 pruebas: información faltante, pedido prohibido y situación de alarma. ¿Falló alguna? Ajusta la ficha. ¿Quieres pulirla? El botón <b>✨ Refinar con IA</b> copia una solicitud para que ChatGPT/Claude revise tu ficha.</p>
+  </div></div>
+
+  <div class="step"><div class="b">5</div><div>
+    <h3>Supervisa con el checklist</h3>
+    <p>2 minutos al día leyendo el informe, 10 minutos a la semana ajustando una regla. La autonomía solo sube con evidencia. En caso de duda, baja un nivel.</p>
+  </div></div>
+</div></section>
+
+<section id="exemplo"><div class="wrap">
+  <span class="chip">Ejemplo real</span>
+  <h2>Dra. Ana y el Confirmador de Citas</h2>
+  <p class="sub">El 30% de los pacientes faltaba sin avisar. En 5 minutos de Ficha, ella terminó con esto:</p>
+  <div class="grid g2">
+    <div class="card"><h3>🎯 Misión</h3><p>Confirmar por WhatsApp las citas del día siguiente, para reducir las faltas.</p></div>
+    <div class="card"><h3>🗄️ Fuente de la verdad</h3><p>La agenda del sistema de la clínica. Las planillas no valen. Dato raro: avisa, nunca adivina.</p></div>
+    <div class="card"><h3>🛡️ Nivel N2: prepara, ella aprueba</h3><p>Porque habla con pacientes y un mensaje enviado no se puede deshacer. Prohibido: reagendar, cancelar, hablar de precios. Sube a N3 después de 4 semanas sin errores.</p></div>
+    <div class="card"><h3>👁️ Informe y revisión</h3><p>A las 17h: enviados, confirmados, sin respuesta, errores. Llama de inmediato si hay un reclamo. Revisión todos los viernes, 10 minutos.</p></div>
+  </div>
+</div></section>
+
+<section id="segredo" style="border-bottom:none"><div class="wrap">
+  <div class="secret">
+    <div>
+      <span class="chip">🔓 El secreto revelado</span>
+      <h2>Al final, ¿qué son estos textos?</h2>
+      <p>Hay una lectura detrás del informe, del análisis y de la infografía, y cambia cómo ves todo esto. Spoiler: probablemente ya practicas al menos 5 de los 7 principios, solo que con otro nombre.</p>
+    </div>
+    <a class="btn" href="https://inematds.github.io/7pa-segredo/es/">Revelar el secreto →</a>
+  </div>
+</div></section>
+
+<section id="roadmap"><div class="wrap">
+  <span class="chip">Fuentes y próximos pasos</span>
+  <h2>De dónde viene y hacia dónde va</h2>
+  <p class="sub">El material original está en el repositorio: <a href="https://github.com/inematds/7pa/tree/main/conteudo">informe, análisis y los 7 principios</a>.</p>
+  <div class="phase"><div class="tag">Ahora</div><div class="d"><strong>Ficha del Agente + esta guía</strong><span>7 preguntas, nivel calculado, instrucción lista, 3 pruebas, checklist. En portugués, inglés y español.</span></div></div>
+  <div class="phase"><div class="tag">A continuación</div><div class="d"><strong>Galería de fichas listas y videos</strong><span>10 casos por área (inmobiliaria, abogacía, restaurante, escuela…), un reel corto y un video explicativo.</span></div></div>
+  <div class="phase"><div class="tag">Después</div><div class="d"><strong>Auditoría de tu agente</strong><span>Pega la instrucción que ya usas y recibe una calificación en los 7 principios, con lo que falta.</span></div></div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">HTML estático</div><div class="pill">Funciona en el navegador</div><div class="pill">Sin inicio de sesión</div><div class="pill">PT · EN · ES</div>
+    <p style="margin-top:18px">7 Principios de la Gestión de Agentes de IA ·
+      <a href="https://github.com/inematds/7pa">github.com/inematds/7pa</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var KEY='7pa-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    try{ if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; } }catch(e){}
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      try{ localStorage.setItem(KEY, light?'light':'dark'); }catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>

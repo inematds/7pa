@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ficha do Agente — 7 perguntas, seu agente de IA pronto</title>
+<meta name="description" content="Responda 7 perguntas simples e receba pronto: a instrução do seu agente de IA, o nível de autonomia certo, testes e checklist de supervisão.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    --ok:#4ade80; --warn:#f87171;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    --ok:#15803d; --warn:#b91c1c;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:17px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  .wrap{max-width:900px;margin:0 auto;padding:0 18px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  body.light nav{background:rgba(246,247,249,.85)}
+  nav .wrap{display:flex;align-items:center;gap:14px;height:60px;max-width:1160px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb);white-space:nowrap}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:16px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  @media(max-width:760px){nav .links a.sec{display:none} nav .brand .nm{display:none}}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(226,162,59,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:1.05rem}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.65em 1.1em;border-radius:10px;font-family:Sora;border:none;cursor:pointer;font-size:.95rem}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  .btn:disabled{opacity:.4;cursor:default}
+  .hero{padding:46px 0 26px;text-align:center}
+  .hero h1{font-size:clamp(1.9rem,5vw,3rem);font-weight:800;letter-spacing:-.025em}
+  .hero p{color:var(--mut);max-width:56ch;margin:.9em auto 0;font-size:1.08rem}
+  .presets{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:22px 0 6px}
+  .presets button{background:var(--card);border:1px solid var(--line);color:var(--txt);padding:.55em 1em;border-radius:999px;cursor:pointer;font-family:Sora;font-size:.88rem}
+  .presets button:hover,.presets button.on{border-color:var(--amb);color:var(--amb)}
+  .prog{display:flex;gap:6px;margin:26px 0 10px}
+  .prog i{flex:1;height:6px;border-radius:9px;background:var(--line);cursor:pointer}
+  .prog i.done{background:var(--amb2);opacity:.55} .prog i.cur{background:var(--amb)}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px 24px;margin-bottom:22px}
+  .panel .ptag{font-family:Sora;font-size:.8rem;color:var(--mut)}
+  .panel h2{font-size:clamp(1.3rem,3.4vw,1.75rem);margin:.35em 0 .3em}
+  .panel .why{color:var(--mut);font-size:.95rem;margin:0 0 1.2em}
+  label{display:block;font-weight:600;margin:1em 0 .35em;font-size:.97rem}
+  label small{display:block;font-weight:400;color:var(--mut);font-size:.84rem;margin-top:2px}
+  input[type=text],textarea{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:.7em .85em;font:inherit;font-size:.97rem}
+  textarea{min-height:92px;resize:vertical}
+  input:focus,textarea:focus{outline:none;border-color:var(--amb)}
+  .opts{display:grid;gap:8px}
+  .opt{display:flex;gap:10px;align-items:flex-start;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:.7em .85em;cursor:pointer;font-weight:400;margin:0}
+  .opt input{margin-top:.3em;accent-color:var(--amb)}
+  .opt b{font-family:Sora;font-size:.92rem}
+  .opt span{display:block;color:var(--mut);font-size:.85rem}
+  .nav2{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+  .princ{margin-top:18px;padding:12px 14px;border-left:3px solid var(--amb);background:var(--bg2);border-radius:0 10px 10px 0;font-size:.88rem;color:var(--mut)}
+  .princ b{color:var(--amb)}
+  #result{display:none}
+  .level{display:flex;gap:18px;align-items:center;background:linear-gradient(135deg,rgba(226,162,59,.18),transparent);border:1px solid var(--amb);border-radius:16px;padding:20px;margin-bottom:18px}
+  .level .big{font-family:Sora;font-weight:800;font-size:2.6rem;color:var(--amb);line-height:1}
+  .level h3{font-size:1.15rem} .level p{margin:.3em 0 0;color:var(--mut);font-size:.93rem}
+  .ladder{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:0 0 18px}
+  .ladder div{text-align:center;padding:8px 4px;border:1px solid var(--line);border-radius:10px;font-size:.75rem;color:var(--mut)}
+  .ladder div b{display:block;font-family:Sora;font-size:1rem;color:var(--txt)}
+  .ladder div.on{border-color:var(--amb);background:rgba(226,162,59,.12)} .ladder div.on b{color:var(--amb)}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .tabs button{background:var(--bg2);border:1px solid var(--line);color:var(--mut);padding:.5em .9em;border-radius:10px;cursor:pointer;font-family:Sora;font-size:.86rem}
+  .tabs button.on{color:var(--amb);border-color:var(--amb)}
+  .out{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:20px;white-space:pre-wrap;font-size:.93rem;line-height:1.65}
+  .out.mono{font-family:"JetBrains Mono",monospace;font-size:.84rem}
+  .out h4{font-family:Sora;margin:1em 0 .2em;color:var(--amb);font-size:.95rem}
+  .out h4:first-child{margin-top:0}
+  .acts{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 0}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--amb);color:#1a1206;font-family:Sora;font-weight:600;padding:.6em 1.2em;border-radius:10px;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+  .toast.show{opacity:1}
+  .how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:8px 0 30px}
+  .how div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;font-size:.9rem;color:var(--mut)}
+  .how b{display:block;color:var(--txt);font-family:Sora;margin-bottom:.2em}
+  @media(max-width:640px){.how{grid-template-columns:1fr}.ladder div{font-size:.62rem}.level{flex-direction:column;align-items:flex-start}}
+  footer{padding:36px 0;text-align:center;color:var(--mut);font-size:.9rem;border-top:1px solid var(--line);margin-top:30px}
+  @media print{
+    nav,.hero,.presets,.prog,#wizard,.tabs,.acts,footer,.how,.toast{display:none!important}
+    body{background:#fff;color:#000;font-size:12pt}
+    #result{display:block!important} .out{border:none;background:#fff;color:#000;padding:0}
+    .level{border:1px solid #999;background:#fff} .level .big,.out h4{color:#000}
+    .printall .tabpane{display:block!important;page-break-inside:avoid;margin-bottom:18px}
+  }
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top">🧭 <span class="nm">Ficha do Agente</span></a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="guia/">Entenda os 7 princípios</a>
+    <a class="sec" href="https://inematds.github.io/7pa-segredo/">O segredo</a>
+    <span class="lang"><a class="on" href="./">PT</a><a href="en/">EN</a><a href="es/">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Alternar tema" title="Alternar tema">🌙</button>
+    <a class="btn" href="https://github.com/inematds/7pa" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+  <span class="chip">Os 7 princípios da gestão de agentes · na prática</span>
+  <h1>Responda 7 perguntas.<br>Seu agente de IA sai <span class="amb">pronto</span>.</h1>
+  <p>Você não precisa estudar teoria. Diga o que quer delegar pra IA, como diria a um funcionário novo, e receba a instrução pronta, o nível de liberdade certo, os testes e o checklist pra acompanhar.</p>
+  <div class="presets" id="presets">
+    <span class="mut" style="width:100%;font-size:.88rem">Comece de um exemplo pronto (e ajuste) — ou em branco:</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <div class="how">
+    <div><b>1 · Responda</b>7 perguntas simples, uma por tela. Uns 5 minutos.</div>
+    <div><b>2 · Receba</b>Ficha, instrução pronta, nível de autonomia calculado, testes e checklist.</div>
+    <div><b>3 · Use</b>Cole a instrução no ChatGPT, Claude ou Gemini. Rode os testes antes de confiar.</div>
+  </div>
+
+  <div class="prog" id="prog"></div>
+  <div id="wizard"></div>
+
+  <div id="result">
+    <div class="level" id="levelBox"></div>
+    <div class="ladder" id="ladder"></div>
+    <div class="tabs" id="tabs"></div>
+    <div id="panes"></div>
+    <div class="acts">
+      <button class="btn" id="copyBtn">📋 Copiar esta aba</button>
+      <button class="btn ghost" id="refineBtn" title="Copia um pedido pro ChatGPT/Claude melhorar sua ficha">✨ Refinar com IA</button>
+      <button class="btn ghost" id="printBtn">🖨️ Imprimir tudo</button>
+      <button class="btn ghost" id="editBtn">✏️ Voltar e ajustar</button>
+      <button class="btn ghost" id="resetBtn">↺ Começar outra</button>
+    </div>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  Ficha do Agente · baseada nos <a href="guia/">7 Princípios da Gestão de Agentes de IA</a> · roda 100% no seu navegador, nada é enviado ·
+  <a href="https://inema.club">INEMA.CLUB</a>
+</div></footer>
+
+<div class="toast" id="toast">Copiado!</div>
+
+<script>
+(function(){
+'use strict';
+var KEY='7pa-ficha-v1', TKEY='7pa-theme';
+
+/* ---------- tema ---------- */
+var b=document.body, t=document.getElementById('themeToggle');
+try{ if(localStorage.getItem(TKEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; } }catch(e){}
+t.addEventListener('click',function(){ var l=b.classList.toggle('light'); t.textContent=l?'☀️':'🌙'; try{localStorage.setItem(TKEY,l?'light':'dark');}catch(e){} });
+
+/* ---------- as 7 perguntas ---------- */
+var STEPS=[
+ {n:'Intenção', q:'O que você quer tirar da sua mão?', why:'Sem objetivo claro, até a IA mais poderosa faz a coisa errada muito bem feita.',
+  princ:'Antes de delegar, defina o propósito.',
+  f:[{k:'nome',l:'Dê um nome pro seu agente',h:'Como se fosse o cargo dele.',ph:'Ex.: Confirmador de Consultas'},
+     {k:'tarefa',l:'Qual tarefa ele vai fazer por você?',h:'Uma tarefa só. Com verbo.',ph:'Ex.: Confirmar pelo WhatsApp as consultas do dia seguinte',ta:1},
+     {k:'porque',l:'Por que isso importa?',h:'Vira a prioridade dele quando tiver dúvida.',ph:'Ex.: 30% dos pacientes faltam sem avisar e a agenda fica vazia'}]},
+ {n:'Contexto', q:'Se você contratasse alguém hoje pra isso, o que explicaria no 1º dia?', why:'Só o essencial. Mais informação não é melhor: é mais confusão.',
+  princ:'Forneça o menor contexto capaz de produzir a melhor decisão.',
+  f:[{k:'regras',l:'As regras da casa',h:'Uma por linha. Horários, jeito de falar, o que é costume.',ph:'Tratar por senhor/senhora\nMensagens só entre 9h e 17h\nSábado não tem atendimento',ta:1},
+     {k:'tom',l:'Como ele deve falar?',h:'O tom da conversa.',ph:'Ex.: Cordial, curto, sem gírias'}]},
+ {n:'Dados confiáveis', q:'De onde vem a informação certa?', why:'Nenhum agente é melhor do que a informação que ele usa. Se tem duas fontes, uma precisa mandar.',
+  princ:'Nenhum agente é melhor do que os dados sobre os quais opera.',
+  f:[{k:'fonte',l:'Qual é a fonte oficial (a "fonte da verdade")?',h:'Onde está a informação que vale.',ph:'Ex.: A agenda do sistema da clínica'},
+     {k:'naovale',l:'O que NÃO vale / o que ignorar?',h:'Planilhas velhas, anotações, "achismo".',ph:'Ex.: Planilha antiga e anotações de papel não valem'},
+     {k:'faltando',l:'Se a informação estiver faltando ou estranha, ele deve…',h:'A regra de ouro: nunca chutar.',ph:'Ex.: Me avisar e não inventar nada'}]},
+ {n:'Critério de sucesso', q:'Como é um dia em que isso ficou perfeito?', why:'Se ele não sabe o que é "bem feito", termina a tarefa sem resolver o problema.',
+  princ:'Toda delegação precisa de uma definição clara de sucesso.',
+  f:[{k:'sucesso',l:'Descreva o resultado perfeito',h:'O que dá pra ver/contar quando deu certo.',ph:'Ex.: Todo paciente de amanhã recebeu mensagem e eu tenho a lista de quem não respondeu',ta:1},
+     {k:'prazo',l:'Até quando / com que frequência?',h:'',ph:'Ex.: Todo dia até as 17h'}]},
+ {n:'Autonomia com limites', q:'Quanta liberdade ele pode ter?', why:'Aqui a Ficha calcula o nível certo pra você. Mais risco = mais controle.',
+  princ:'A autonomia cresce junto com confiança, evidência e controle.',
+  f:[{k:'acao',l:'O que ele faz, na prática?',radio:[
+       ['consulta','Só responde e pesquisa','Tira dúvidas, busca informação. Não produz nada que vá pra fora.'],
+       ['rascunho','Prepara e sugere','Escreve rascunhos, listas, propostas — você decide o que usar.'],
+       ['executa','Executa a tarefa','Envia, cadastra, atualiza, publica — faz de verdade.'],
+       ['coordena','Toca um processo inteiro','Várias etapas, várias tarefas, às vezes outros agentes.']]},
+     {k:'riscos',l:'Marque o que for verdade sobre essa tarefa:',check:[
+       ['dinheiro','Envolve dinheiro','Preço, pagamento, cobrança, desconto, compra.'],
+       ['irreversivel','Tem coisa que não dá pra desfazer','Mensagem enviada, cancelamento, exclusão.'],
+       ['fora','Fala com gente de fora','Clientes, pacientes, fornecedores, alunos, público.']]},
+     {k:'proibido',l:'O que ele NUNCA pode fazer sozinho?',h:'Uma proibição por linha.',ph:'Remarcar ou cancelar consulta\nFalar de valores\nResponder reclamação',ta:1}]},
+ {n:'Observação', q:'O que você quer ver pra saber se está indo bem?', why:'O que não é observado não pode ser melhorado. Ele presta contas; você enxerga.',
+  princ:'Aquilo que não é observado não pode ser melhorado.',
+  f:[{k:'relatorio',l:'O que ele deve te mostrar no relatório?',h:'Números simples e os problemas.',ph:'Ex.: Enviados, confirmados, não responderam, erros',ta:1},
+     {k:'quandorel',l:'Quando?',h:'',ph:'Ex.: Todo dia às 17h'}]},
+ {n:'Supervisão humana', q:'Quando ele deve te chamar? Quando você revisa?', why:'A IA executa; a responsabilidade continua sua. Isso é gerenciar, não fazer.',
+  princ:'Agentes ampliam a capacidade humana; não eliminam o julgamento.',
+  f:[{k:'chamar',l:'Em que situações ele para e te chama na hora?',h:'Uma por linha.',ph:'Paciente reclamando\nPedido de remarcação\nDois pacientes no mesmo horário',ta:1},
+     {k:'revisao',l:'Quando você vai revisar o trabalho dele?',h:'Um horário fixo. 10 minutos bastam.',ph:'Ex.: Toda sexta, 10 minutos'}]}
+];
+
+/* ---------- exemplos prontos ---------- */
+var PRESETS={
+ clinica:{rot:'🩺 Clínica',nome:'Confirmador de Consultas',tarefa:'Confirmar pelo WhatsApp as consultas do dia seguinte',porque:'30% dos pacientes faltam sem avisar e a agenda fica vazia',
+  regras:'Tratar por senhor/senhora\nMensagens só entre 9h e 17h\nSábado não tem atendimento',tom:'Cordial, curto, sem gírias',
+  fonte:'A agenda do sistema da clínica',naovale:'Planilha antiga e anotações de papel não valem',faltando:'Me avisar e não inventar nada',
+  sucesso:'Todo paciente de amanhã recebeu mensagem e eu tenho a lista de quem não respondeu',prazo:'Todo dia até as 17h',
+  acao:'executa',riscos:['irreversivel','fora'],proibido:'Remarcar ou cancelar consulta\nFalar de valores\nResponder reclamação',
+  relatorio:'Enviados, confirmados, não responderam, erros',quandorel:'Todo dia às 17h',
+  chamar:'Paciente reclamando\nPedido de remarcação\nDois pacientes no mesmo horário',revisao:'Toda sexta, 10 minutos'},
+ loja:{rot:'🛍️ Loja',nome:'Atendente de Pedidos',tarefa:'Responder clientes sobre status de pedido, prazo de entrega e trocas',porque:'Perco 2 horas por dia respondendo a mesma pergunta e o cliente fica esperando',
+  regras:'Sempre informar o número do pedido\nPrazo de troca é 7 dias\nNão prometer data de entrega que não está no sistema',tom:'Simpático, direto, usando o nome do cliente',
+  fonte:'O painel de pedidos da loja',naovale:'O que o cliente diz que comprou, sem número de pedido',faltando:'Pedir o número do pedido; se não achar, me passar o caso',
+  sucesso:'Todo cliente recebe resposta certa em menos de 1 hora e só os casos difíceis chegam até mim',prazo:'Durante o horário comercial',
+  acao:'executa',riscos:['dinheiro','fora'],proibido:'Dar desconto ou reembolso\nAprovar troca fora do prazo\nPrometer brinde',
+  relatorio:'Atendimentos, dúvidas mais comuns, casos passados pra mim',quandorel:'Todo dia às 18h',
+  chamar:'Cliente irritado ou ameaçando reclamar\nPedido de reembolso\nProduto com defeito',revisao:'Segunda-feira, 15 minutos'},
+ contabil:{rot:'📊 Escritório contábil',nome:'Organizador de Documentos',tarefa:'Conferir os documentos que os clientes mandam no mês e listar o que está faltando',porque:'No fechamento do mês a equipe perde dias correndo atrás de nota fiscal',
+  regras:'Cada cliente tem uma pasta com o nome da empresa\nPrazo de envio é dia 5\nNão comentar valores com terceiros',tom:'Formal e objetivo',
+  fonte:'A lista de obrigações de cada cliente no sistema do escritório',naovale:'Documentos enviados por WhatsApp sem registro na pasta',faltando:'Marcar como "pendente" e me avisar, sem supor',
+  sucesso:'No dia 6 eu tenho, por cliente, o que chegou e o que falta, sem erro',prazo:'Todo mês, até o dia 6',
+  acao:'rascunho',riscos:[],proibido:'Enviar cobrança para o cliente\nApagar ou mover documento\nPreencher dado que não está no documento',
+  relatorio:'Clientes completos, clientes com pendência e o que falta de cada um',quandorel:'Dia 6 de cada mês',
+  chamar:'Documento ilegível ou suspeito\nCliente que não mandou nada\nValor muito fora do normal',revisao:'Dia 6, 20 minutos'},
+ professor:{rot:'🎓 Professor',nome:'Assistente de Correção',tarefa:'Fazer uma primeira correção das redações dos alunos com base na minha rubrica',porque:'Corrigo 120 redações por semana e o retorno chega tarde demais pro aluno',
+  regras:'Seguir só a minha rubrica\nComentário sempre começa por um ponto positivo\nLinguagem adequada para adolescentes',tom:'Encorajador e claro',
+  fonte:'A rubrica oficial da disciplina (documento anexado)',naovale:'Critérios da internet ou de outros professores',faltando:'Marcar "revisar" e não dar nota',
+  sucesso:'Cada redação tem nota sugerida por critério e 3 comentários úteis, e eu só confiro',prazo:'Até domingo à noite',
+  acao:'rascunho',riscos:['fora'],proibido:'Lançar nota no sistema\nFalar diretamente com aluno ou família\nAcusar plágio',
+  relatorio:'Notas sugeridas, redações marcadas pra revisar, erros mais comuns da turma',quandorel:'Domingo à noite',
+  chamar:'Suspeita de plágio ou de texto feito por IA\nConteúdo preocupante (bullying, risco)\nRedação fora do tema',revisao:'Segunda de manhã, 20 minutos'}
+};
+
+var LEVELS=[
+ ['N0','Consulta','Só responde e pesquisa. Não age.'],
+ ['N1','Recomenda','Sugere e prepara rascunhos. Você decide.'],
+ ['N2','Prepara, você aprova','Deixa tudo pronto; nada sai sem o seu OK.'],
+ ['N3','Executa','Faz sozinho, dentro das regras, e presta contas.'],
+ ['N4','Gerencia processos','Toca um processo inteiro, com relatório e alarmes.']
+];
+
+var st={step:0, d:{}, preset:null};
+try{ var sv=JSON.parse(localStorage.getItem(KEY)||'null'); if(sv&&sv.d) st=sv; }catch(e){}
+function save(){ try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){} }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function lines(s){ return String(s||'').split('\n').map(function(x){return x.replace(/^[-•*\s]+/,'').trim();}).filter(Boolean); }
+function v(k,fb){ var x=st.d[k]; return (x&&String(x).trim())?String(x).trim():(fb||''); }
+function $(id){ return document.getElementById(id); }
+
+/* ---------- presets ---------- */
+var pw=$('presets');
+Object.keys(PRESETS).forEach(function(k){
+  var bt=document.createElement('button'); bt.textContent=PRESETS[k].rot; bt.dataset.k=k;
+  bt.onclick=function(){ var p=PRESETS[k]; st.d={}; Object.keys(p).forEach(function(x){ if(x!=='rot') st.d[x]=Array.isArray(p[x])?p[x].slice():p[x]; }); st.preset=k; st.step=0; save(); render(); $('prog').scrollIntoView({behavior:'smooth'}); };
+  pw.appendChild(bt);
+});
+var blank=document.createElement('button'); blank.textContent='✍️ Em branco';
+blank.onclick=function(){ st={step:0,d:{},preset:null}; save(); render(); $('prog').scrollIntoView({behavior:'smooth'}); };
+pw.appendChild(blank);
+
+/* ---------- wizard ---------- */
+function render(){
+  [].forEach.call(pw.querySelectorAll('button'),function(x){ x.classList.toggle('on', x.dataset.k===st.preset); });
+  var pg=$('prog'); pg.innerHTML='';
+  for(var i=0;i<=STEPS.length;i++){ var it=document.createElement('i'); it.title=i<STEPS.length?(i+1)+'. '+STEPS[i].n:'Sua ficha';
+    it.className=i===st.step?'cur':(i<st.step?'done':''); (function(j){ it.onclick=function(){ st.step=j; save(); render(); }; })(i); pg.appendChild(it); }
+  if(st.step>=STEPS.length){ $('wizard').style.display='none'; $('result').style.display='block'; buildResult(); return; }
+  $('wizard').style.display='block'; $('result').style.display='none';
+  var s=STEPS[st.step], h='<div class="panel"><div class="ptag">Pergunta '+(st.step+1)+' de 7 · <span class="amb">'+s.n+'</span></div><h2>'+esc(s.q)+'</h2><p class="why">'+esc(s.why)+'</p>';
+  s.f.forEach(function(f){
+    h+='<label>'+esc(f.l)+(f.h?'<small>'+esc(f.h)+'</small>':'')+'</label>';
+    if(f.radio){ h+='<div class="opts">'+f.radio.map(function(o){ return '<label class="opt"><input type="radio" name="'+f.k+'" value="'+o[0]+'"'+(st.d[f.k]===o[0]?' checked':'')+'><div><b>'+o[1]+'</b><span>'+o[2]+'</span></div></label>'; }).join('')+'</div>'; }
+    else if(f.check){ var cur=st.d[f.k]||[]; h+='<div class="opts">'+f.check.map(function(o){ return '<label class="opt"><input type="checkbox" name="'+f.k+'" value="'+o[0]+'"'+(cur.indexOf(o[0])>=0?' checked':'')+'><div><b>'+o[1]+'</b><span>'+o[2]+'</span></div></label>'; }).join('')+'</div>'; }
+    else if(f.ta){ h+='<textarea data-k="'+f.k+'" placeholder="'+esc(f.ph)+'">'+esc(st.d[f.k]||'')+'</textarea>'; }
+    else { h+='<input type="text" data-k="'+f.k+'" placeholder="'+esc(f.ph)+'" value="'+esc(st.d[f.k]||'')+'">'; }
+  });
+  h+='<div class="princ"><b>Princípio '+(st.step+1)+':</b> '+esc(s.princ)+'</div>';
+  h+='<div class="nav2"><button class="btn ghost" id="bk"'+(st.step===0?' disabled':'')+'>← Voltar</button><button class="btn" id="nx">'+(st.step===STEPS.length-1?'Gerar minha ficha ✨':'Próxima →')+'</button></div></div>';
+  var w=$('wizard'); w.innerHTML=h;
+  [].forEach.call(w.querySelectorAll('[data-k]'),function(el){ el.addEventListener('input',function(){ st.d[el.dataset.k]=el.value; save(); }); });
+  [].forEach.call(w.querySelectorAll('input[type=radio]'),function(el){ el.addEventListener('change',function(){ st.d[el.name]=el.value; save(); }); });
+  [].forEach.call(w.querySelectorAll('input[type=checkbox]'),function(el){ el.addEventListener('change',function(){
+    st.d[el.name]=[].map.call(w.querySelectorAll('input[name='+el.name+']:checked'),function(x){return x.value;}); save(); }); });
+  $('bk').onclick=function(){ st.step--; save(); render(); };
+  $('nx').onclick=function(){ st.step++; save(); render(); window.scrollTo({top:$('prog').offsetTop-80,behavior:'smooth'}); };
+}
+
+/* ---------- a regra do nível (o "mágico") ---------- */
+function calcLevel(){
+  var a=st.d.acao||'rascunho', r=st.d.riscos||[], motivos=[], lvl;
+  var base={consulta:0,rascunho:1,executa:3,coordena:4}[a]; if(base==null) base=1;
+  lvl=base;
+  var risco=r.filter(function(x){return ['dinheiro','irreversivel','fora'].indexOf(x)>=0;});
+  if(lvl>=3 && risco.length){
+    lvl=2;
+    var nm={dinheiro:'envolve dinheiro',irreversivel:'tem ação que não dá pra desfazer',fora:'fala com gente de fora'};
+    var ps=risco.map(function(x){return nm[x];}), fr=ps.length>1?ps.slice(0,-1).join(', ')+' e '+ps[ps.length-1]:ps[0];
+    motivos.push('A tarefa '+fr+'. Por isso ele prepara e você aprova antes de sair qualquer coisa.');
+  }
+  if(lvl>1 && !v('fonte')){ lvl=1; motivos.push('Você ainda não definiu a fonte oficial da informação. Sem isso, ele só pode sugerir — nunca agir.'); }
+  if(!motivos.length){
+    motivos.push(['Ele só consulta e responde; não age no mundo.','Ele só prepara e sugere; a decisão continua sua.','',
+      'A tarefa é interna e reversível, e há fonte oficial definida: ele pode executar sozinho, prestando contas.',
+      'Processo interno, reversível e com fonte oficial: ele pode tocar o processo — mas com relatório e alarmes.'][lvl]);
+  }
+  var subir={0:'Para subir: defina a fonte oficial e deixe ele preparar rascunhos (N1).',
+    1:'Para subir para N2: defina a fonte oficial e use 2 semanas de rascunhos sem erro importante.',
+    2:'Para subir para N3: 4 semanas seguidas aprovando sem precisar corrigir nada — e só para a parte que não envolve risco.',
+    3:'Para subir para N4: 2 meses de relatórios limpos e os alarmes (quando te chamar) funcionando.',
+    4:'Nível máximo. Mantenha a revisão semanal: autonomia alta exige mais observação, não menos.'}[lvl];
+  return {n:lvl, motivos:motivos, subir:subir};
+}
+
+function modeLine(n){
+  return ['Você só pode consultar, pesquisar e responder. Não execute nenhuma ação.',
+    'Você só pode sugerir e preparar rascunhos. Nunca execute nada: eu decido o que usar.',
+    'Você prepara tudo, mas NADA é enviado, alterado ou executado sem a minha aprovação explícita. Sempre me mostre antes e espere o meu "OK".',
+    'Você pode executar a tarefa sozinho, dentro das regras e proibições abaixo, e me prestar contas no relatório.',
+    'Você pode conduzir o processo inteiro, dentro das regras e proibições abaixo, com relatório e alarmes.'][n];
+}
+
+/* ---------- gera o pacote ---------- */
+var TABS=[['ficha','📄 Ficha'],['prompt','🤖 Instrução pronta'],['testes','🧪 3 testes'],['check','✅ Checklist']];
+var curTab='ficha', TXT={};
+
+function buildResult(){
+  var L=calcLevel(), nome=v('nome','Meu Agente'), proib=lines(st.d.proibido), cham=lines(st.d.chamar), regras=lines(st.d.regras);
+  $('levelBox').innerHTML='<div class="big">'+LEVELS[L.n][0]+'</div><div><h3>Nível de autonomia: '+LEVELS[L.n][1]+'</h3><p>'+esc(L.motivos.join(' '))+'</p><p>'+esc(L.subir)+'</p></div>';
+  $('ladder').innerHTML=LEVELS.map(function(x,i){ return '<div class="'+(i===L.n?'on':'')+'"><b>'+x[0]+'</b>'+x[1]+'</div>'; }).join('');
+
+  var ul=function(a,fb){ return a.length?a.map(function(x){return '• '+x;}).join('\n'):(fb||'• (não definido)'); };
+
+  TXT.ficha='FICHA DO AGENTE — '+nome.toUpperCase()+'\n\n'+
+    '1. MISSÃO (intenção)\n'+v('tarefa','(defina a tarefa)')+'\nPor que importa: '+v('porque','(defina)')+'\n\n'+
+    '2. REGRAS DA CASA (contexto)\n'+ul(regras)+'\nTom: '+v('tom','cordial e direto')+'\n\n'+
+    '3. FONTE DA VERDADE (dados)\nVale: '+v('fonte','(NÃO DEFINIDA — defina antes de ligar)')+'\nNão vale: '+v('naovale','—')+'\nSe faltar ou estiver estranho: '+v('faltando','me avisar e não inventar')+'\n\n'+
+    '4. SUCESSO (critério)\n'+v('sucesso','(defina)')+'\nPrazo: '+v('prazo','—')+'\n\n'+
+    '5. AUTONOMIA — '+LEVELS[L.n][0]+' · '+LEVELS[L.n][1]+'\n'+L.motivos.join(' ')+'\nProibido fazer sozinho:\n'+ul(proib)+'\n'+L.subir+'\n\n'+
+    '6. RELATÓRIO (observação)\n'+v('relatorio','resultados e erros')+'\nQuando: '+v('quandorel','ao fim de cada execução')+'\n\n'+
+    '7. SUPERVISÃO\nMe chama na hora quando:\n'+ul(cham)+'\nRevisão: '+v('revisao','toda semana, 10 minutos');
+
+  TXT.prompt='Você é o "'+nome+'", um assistente que trabalha para mim.\n\n'+
+    '## Sua missão\n'+v('tarefa','(defina a tarefa)')+'.\nIsso importa porque: '+v('porque','(defina)')+'. Quando estiver em dúvida, priorize isso.\n\n'+
+    '## Regras da casa\n'+(regras.length?regras.map(function(x){return '- '+x;}).join('\n'):'- (sem regras extras)')+'\n- Tom: '+v('tom','cordial e direto')+'.\n\n'+
+    '## De onde vem a informação\n- A fonte oficial é: '+v('fonte','(ainda não definida — trate tudo como rascunho)')+'.\n'+(v('naovale')?'- Não use: '+v('naovale')+'.\n':'')+
+    '- Se a informação estiver faltando, conflitante ou estranha: '+v('faltando','me avise e não invente nada')+'.\n- Nunca invente dados, nomes, números ou datas.\n\n'+
+    '## O que é "bem feito"\n'+v('sucesso','(defina)')+(v('prazo')?' Prazo: '+v('prazo')+'.':'')+'\nSó considere a tarefa concluída quando isso for verdade.\n\n'+
+    '## Seu nível de autonomia: '+LEVELS[L.n][0]+' ('+LEVELS[L.n][1]+')\n'+modeLine(L.n)+'\n'+
+    (proib.length?'Você NUNCA faz sozinho:\n'+proib.map(function(x){return '- '+x;}).join('\n')+'\nSe pedirem alguma dessas coisas, diga que vai passar para mim e me avise.\n':'')+'\n'+
+    '## Pare e me chame imediatamente quando\n'+(cham.length?cham.map(function(x){return '- '+x;}).join('\n'):'- Algo fugir das regras acima')+'\n- Você não tiver certeza do que fazer.\n\n'+
+    '## Relatório\n'+(v('quandorel')?v('quandorel')+', ':'Ao terminar, ')+'me entregue: '+v('relatorio','o que foi feito, o que ficou pendente e os erros')+'. Inclua sempre o que deu errado — erro escondido é pior que erro relatado.\n\n'+
+    'Antes de começar, confirme em 3 linhas o que entendeu da sua missão e dos seus limites.';
+
+  var t1=v('fonte')?'Dê a ele um caso em que a informação em "'+v('fonte')+'" está incompleta ou contraditória.':'Dê a ele um caso com informação faltando.';
+  TXT.testes='Rode estes 3 testes ANTES de confiar no agente. Se ele errar algum, ajuste a ficha e repita.\n\n'+
+    'TESTE 1 — Informação faltando (princípio 3)\n'+t1+'\nEsperado: '+v('faltando','ele avisa você e não inventa')+'.\n\n'+
+    'TESTE 2 — Pedido proibido (princípio 5)\nPeça, como se fosse um cliente: "'+(proib[0]||'faça algo fora das regras')+'".\nEsperado: ele NÃO faz, explica que vai passar pra você e te avisa.\n\n'+
+    'TESTE 3 — Situação de alarme (princípio 7)\nSimule: "'+(cham[0]||'uma situação fora do normal')+'".\nEsperado: ele para e te chama, em vez de resolver por conta própria.\n\n'+
+    'BÔNUS — Critério de sucesso (princípio 4)\nAo fim de uma rodada, compare com: "'+v('sucesso','(seu critério)')+'". Bateu? Então está pronto pra rodar no nível '+LEVELS[L.n][0]+'.';
+
+  TXT.check='CHECKLIST DE SUPERVISÃO — '+nome+'\n\n'+
+    'ANTES DE LIGAR\n☐ Os 3 testes passaram\n☐ A fonte oficial está atualizada\n☐ Todos sabem que existe um agente fazendo isso\n\n'+
+    'TODO DIA (2 minutos)\n☐ Li o relatório ('+v('quandorel','ao fim do dia')+')\n☐ Resolvi os casos em que ele me chamou\n☐ Algum erro? Anotei numa linha: data · o que houve · a menor correção\n\n'+
+    'TODA SEMANA — '+v('revisao','10 minutos')+'\n☐ Reli os erros anotados da semana\n☐ Ajustei UMA regra da ficha (não mais que uma)\n☐ O critério de sucesso foi atingido?\n\n'+
+    'TODO MÊS\n☐ O nível '+LEVELS[L.n][0]+' continua certo? '+L.subir+'\n☐ A tarefa ainda é a mesma? Se mudou, refaça a ficha.\n\n'+
+    'Lembre: autonomia sobe com evidência. Na dúvida, desça um nível.';
+
+  var tb=$('tabs'); tb.innerHTML='';
+  TABS.forEach(function(x){ var bt=document.createElement('button'); bt.textContent=x[1]; bt.className=x[0]===curTab?'on':''; bt.onclick=function(){ curTab=x[0]; buildResult(); }; tb.appendChild(bt); });
+  $('panes').innerHTML=TABS.map(function(x){ return '<div class="tabpane" style="display:'+(x[0]===curTab?'block':'none')+'"><div class="out'+(x[0]==='prompt'?' mono':'')+'">'+esc(TXT[x[0]])+'</div></div>'; }).join('');
+}
+
+function toast(m){ var e=$('toast'); e.textContent=m||'Copiado!'; e.classList.add('show'); setTimeout(function(){e.classList.remove('show');},1600); }
+function copy(txt,m){
+  var done=function(){ toast(m); };
+  if(navigator.clipboard&&window.isSecureContext){ navigator.clipboard.writeText(txt).then(done,fallback); } else fallback();
+  function fallback(){ var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); done(); }
+}
+$('copyBtn').onclick=function(){ copy(TXT[curTab]); };
+$('refineBtn').onclick=function(){
+  copy('Sou dono(a) de um pequeno negócio e montei a ficha abaixo para delegar uma tarefa a um agente de IA, seguindo os 7 princípios da gestão de agentes (intenção, contexto, dados confiáveis, critério de sucesso, autonomia com limites, observação e supervisão humana).\n\n'+
+    'Faça 3 coisas:\n1. Aponte, em no máximo 5 itens, o que está vago, arriscado ou faltando.\n2. Me faça até 3 perguntas curtas para completar o que falta.\n3. Depois das minhas respostas, devolva a INSTRUÇÃO final reescrita, pronta para colar, mantendo o nível de autonomia (ou justificando se deve ser MENOR — nunca maior).\n\n--- MINHA FICHA ---\n'+TXT.ficha,
+    'Copiado! Cole no ChatGPT ou Claude');
+};
+$('printBtn').onclick=function(){ document.body.classList.add('printall'); window.print(); setTimeout(function(){document.body.classList.remove('printall');},500); };
+$('editBtn').onclick=function(){ st.step=0; save(); render(); window.scrollTo({top:$('prog').offsetTop-80,behavior:'smooth'}); };
+$('resetBtn').onclick=function(){ st={step:0,d:{},preset:null}; save(); render(); window.scrollTo({top:0,behavior:'smooth'}); };
+
+render();
+})();
+</script>
+</body>
+</html>

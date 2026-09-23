@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Sheet — 7 questions, your AI agent ready to go</title>
+<meta name="description" content="Answer 7 simple questions and get: your AI agent's instruction, the right autonomy level, tests and a supervision checklist.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    --ok:#4ade80; --warn:#f87171;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    --ok:#15803d; --warn:#b91c1c;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:17px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  .wrap{max-width:900px;margin:0 auto;padding:0 18px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  body.light nav{background:rgba(246,247,249,.85)}
+  nav .wrap{display:flex;align-items:center;gap:14px;height:60px;max-width:1160px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb);white-space:nowrap}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:16px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  @media(max-width:760px){nav .links a.sec{display:none} nav .brand .nm{display:none}}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(226,162,59,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:1.05rem}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.65em 1.1em;border-radius:10px;font-family:Sora;border:none;cursor:pointer;font-size:.95rem}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  .btn:disabled{opacity:.4;cursor:default}
+  .hero{padding:46px 0 26px;text-align:center}
+  .hero h1{font-size:clamp(1.9rem,5vw,3rem);font-weight:800;letter-spacing:-.025em}
+  .hero p{color:var(--mut);max-width:56ch;margin:.9em auto 0;font-size:1.08rem}
+  .presets{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:22px 0 6px}
+  .presets button{background:var(--card);border:1px solid var(--line);color:var(--txt);padding:.55em 1em;border-radius:999px;cursor:pointer;font-family:Sora;font-size:.88rem}
+  .presets button:hover,.presets button.on{border-color:var(--amb);color:var(--amb)}
+  .prog{display:flex;gap:6px;margin:26px 0 10px}
+  .prog i{flex:1;height:6px;border-radius:9px;background:var(--line);cursor:pointer}
+  .prog i.done{background:var(--amb2);opacity:.55} .prog i.cur{background:var(--amb)}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px 24px;margin-bottom:22px}
+  .panel .ptag{font-family:Sora;font-size:.8rem;color:var(--mut)}
+  .panel h2{font-size:clamp(1.3rem,3.4vw,1.75rem);margin:.35em 0 .3em}
+  .panel .why{color:var(--mut);font-size:.95rem;margin:0 0 1.2em}
+  label{display:block;font-weight:600;margin:1em 0 .35em;font-size:.97rem}
+  label small{display:block;font-weight:400;color:var(--mut);font-size:.84rem;margin-top:2px}
+  input[type=text],textarea{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:.7em .85em;font:inherit;font-size:.97rem}
+  textarea{min-height:92px;resize:vertical}
+  input:focus,textarea:focus{outline:none;border-color:var(--amb)}
+  .opts{display:grid;gap:8px}
+  .opt{display:flex;gap:10px;align-items:flex-start;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:.7em .85em;cursor:pointer;font-weight:400;margin:0}
+  .opt input{margin-top:.3em;accent-color:var(--amb)}
+  .opt b{font-family:Sora;font-size:.92rem}
+  .opt span{display:block;color:var(--mut);font-size:.85rem}
+  .nav2{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+  .princ{margin-top:18px;padding:12px 14px;border-left:3px solid var(--amb);background:var(--bg2);border-radius:0 10px 10px 0;font-size:.88rem;color:var(--mut)}
+  .princ b{color:var(--amb)}
+  #result{display:none}
+  .level{display:flex;gap:18px;align-items:center;background:linear-gradient(135deg,rgba(226,162,59,.18),transparent);border:1px solid var(--amb);border-radius:16px;padding:20px;margin-bottom:18px}
+  .level .big{font-family:Sora;font-weight:800;font-size:2.6rem;color:var(--amb);line-height:1}
+  .level h3{font-size:1.15rem} .level p{margin:.3em 0 0;color:var(--mut);font-size:.93rem}
+  .ladder{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:0 0 18px}
+  .ladder div{text-align:center;padding:8px 4px;border:1px solid var(--line);border-radius:10px;font-size:.75rem;color:var(--mut)}
+  .ladder div b{display:block;font-family:Sora;font-size:1rem;color:var(--txt)}
+  .ladder div.on{border-color:var(--amb);background:rgba(226,162,59,.12)} .ladder div.on b{color:var(--amb)}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .tabs button{background:var(--bg2);border:1px solid var(--line);color:var(--mut);padding:.5em .9em;border-radius:10px;cursor:pointer;font-family:Sora;font-size:.86rem}
+  .tabs button.on{color:var(--amb);border-color:var(--amb)}
+  .out{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:20px;white-space:pre-wrap;font-size:.93rem;line-height:1.65}
+  .out.mono{font-family:"JetBrains Mono",monospace;font-size:.84rem}
+  .out h4{font-family:Sora;margin:1em 0 .2em;color:var(--amb);font-size:.95rem}
+  .out h4:first-child{margin-top:0}
+  .acts{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 0}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--amb);color:#1a1206;font-family:Sora;font-weight:600;padding:.6em 1.2em;border-radius:10px;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+  .toast.show{opacity:1}
+  .how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:8px 0 30px}
+  .how div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;font-size:.9rem;color:var(--mut)}
+  .how b{display:block;color:var(--txt);font-family:Sora;margin-bottom:.2em}
+  @media(max-width:640px){.how{grid-template-columns:1fr}.ladder div{font-size:.62rem}.level{flex-direction:column;align-items:flex-start}}
+  footer{padding:36px 0;text-align:center;color:var(--mut);font-size:.9rem;border-top:1px solid var(--line);margin-top:30px}
+  @media print{
+    nav,.hero,.presets,.prog,#wizard,.tabs,.acts,footer,.how,.toast{display:none!important}
+    body{background:#fff;color:#000;font-size:12pt}
+    #result{display:block!important} .out{border:none;background:#fff;color:#000;padding:0}
+    .level{border:1px solid #999;background:#fff} .level .big,.out h4{color:#000}
+    .printall .tabpane{display:block!important;page-break-inside:avoid;margin-bottom:18px}
+  }
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top">🧭 <span class="nm">Agent Sheet</span></a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="../guia/en/">Understand the 7 principles</a>
+    <a class="sec" href="https://inematds.github.io/7pa-segredo/en/">The secret</a>
+    <span class="lang"><a href="../">PT</a><a class="on" href="./">EN</a><a href="../es/">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+    <a class="btn" href="https://github.com/inematds/7pa" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+  <span class="chip">The 7 principles of agent management · in practice</span>
+  <h1>Answer 7 questions.<br>Your AI agent comes out <span class="amb">ready</span>.</h1>
+  <p>You don't need to study theory. Say what you want to hand off to AI, the way you'd brief a new employee, and get back the ready-to-use instruction, the right freedom level, the tests and the checklist to keep track.</p>
+  <div class="presets" id="presets">
+    <span class="mut" style="width:100%;font-size:.88rem">Start from a ready example (and tweak it) — or start blank:</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <div class="how">
+    <div><b>1 · Answer</b>7 simple questions, one screen at a time. About 5 minutes.</div>
+    <div><b>2 · Get</b>Sheet, ready instruction, calculated autonomy level, tests and checklist.</div>
+    <div><b>3 · Use</b>Paste the instruction into ChatGPT, Claude or Gemini. Run the tests before trusting it.</div>
+  </div>
+
+  <div class="prog" id="prog"></div>
+  <div id="wizard"></div>
+
+  <div id="result">
+    <div class="level" id="levelBox"></div>
+    <div class="ladder" id="ladder"></div>
+    <div class="tabs" id="tabs"></div>
+    <div id="panes"></div>
+    <div class="acts">
+      <button class="btn" id="copyBtn">📋 Copy this tab</button>
+      <button class="btn ghost" id="refineBtn" title="Copies a request for ChatGPT/Claude to improve your sheet">✨ Refine with AI</button>
+      <button class="btn ghost" id="printBtn">🖨️ Print everything</button>
+      <button class="btn ghost" id="editBtn">✏️ Go back and adjust</button>
+      <button class="btn ghost" id="resetBtn">↺ Start another</button>
+    </div>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  Agent Sheet · based on the <a href="../guia/en/">7 Principles of AI Agent Management</a> · runs 100% in your browser, nothing is sent ·
+  <a href="https://inema.club">INEMA.CLUB</a>
+</div></footer>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+(function(){
+'use strict';
+var KEY='7pa-ficha-v1-en', TKEY='7pa-theme';
+
+/* ---------- theme ---------- */
+var b=document.body, t=document.getElementById('themeToggle');
+try{ if(localStorage.getItem(TKEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; } }catch(e){}
+t.addEventListener('click',function(){ var l=b.classList.toggle('light'); t.textContent=l?'☀️':'🌙'; try{localStorage.setItem(TKEY,l?'light':'dark');}catch(e){} });
+
+/* ---------- the 7 questions ---------- */
+var STEPS=[
+ {n:'Intent', q:'What do you want off your plate?', why:'Without a clear goal, even the most powerful AI does the wrong thing very well.',
+  princ:'Before delegating, define the purpose.',
+  f:[{k:'nome',l:'Give your agent a name',h:'Think of it as its job title.',ph:'E.g.: Appointment Confirmer'},
+     {k:'tarefa',l:'What task will it do for you?',h:'One task only. With a verb.',ph:'E.g.: Confirm next day\'s appointments via WhatsApp',ta:1},
+     {k:'porque',l:'Why does this matter?',h:'This becomes its priority when in doubt.',ph:'E.g.: 30% of patients miss appointments without notice and the schedule ends up empty'}]},
+ {n:'Context', q:'If you hired someone today for this, what would you explain on day 1?', why:'Only the essentials. More information isn\'t better: it\'s more confusion.',
+  princ:'Provide the smallest context capable of producing the best decision.',
+  f:[{k:'regras',l:'The house rules',h:'One per line. Hours, way of speaking, customs.',ph:'Address people as Mr./Ms.\nMessages only between 9am and 5pm\nNo service on Saturdays',ta:1},
+     {k:'tom',l:'How should it speak?',h:'The tone of the conversation.',ph:'E.g.: Polite, short, no slang'}]},
+ {n:'Reliable data', q:'Where does the correct information come from?', why:'No agent is better than the information it uses. If there are two sources, one has to win.',
+  princ:'No agent is better than the data it operates on.',
+  f:[{k:'fonte',l:'What is the official source (the "source of truth")?',h:'Where the information that counts lives.',ph:'E.g.: The clinic\'s scheduling system'},
+     {k:'naovale',l:'What does NOT count / what to ignore?',h:'Old spreadsheets, notes, guesswork.',ph:'E.g.: Old spreadsheets and paper notes don\'t count'},
+     {k:'faltando',l:'If information is missing or looks odd, it should…',h:'The golden rule: never guess.',ph:'E.g.: Let me know and never make anything up'}]},
+ {n:'Success criteria', q:'What does a perfect day look like for this?', why:'If it doesn\'t know what "done well" means, it finishes the task without solving the problem.',
+  princ:'Every delegation needs a clear definition of success.',
+  f:[{k:'sucesso',l:'Describe the perfect outcome',h:'Something you can see/count when it worked.',ph:'E.g.: Every patient for tomorrow got a message and I have the list of who didn\'t reply',ta:1},
+     {k:'prazo',l:'By when / how often?',h:'',ph:'E.g.: Every day by 5pm'}]},
+ {n:'Autonomy with limits', q:'How much freedom can it have?', why:'This is where the Sheet calculates the right level for you. More risk = more control.',
+  princ:'Autonomy grows together with trust, evidence and control.',
+  f:[{k:'acao',l:'What does it actually do?',radio:[
+       ['consulta','Only answers and researches','Answers questions, looks up information. Produces nothing that goes outward.'],
+       ['rascunho','Prepares and suggests','Writes drafts, lists, proposals — you decide what to use.'],
+       ['executa','Executes the task','Sends, registers, updates, publishes — actually does it.'],
+       ['coordena','Runs a whole process','Multiple steps, multiple tasks, sometimes other agents.']]},
+     {k:'riscos',l:'Check what\'s true about this task:',check:[
+       ['dinheiro','Involves money','Price, payment, billing, discount, purchase.'],
+       ['irreversivel','Has something that can\'t be undone','Message sent, cancellation, deletion.'],
+       ['fora','Talks to outside people','Customers, patients, suppliers, students, the public.']]},
+     {k:'proibido',l:'What can it NEVER do alone?',h:'One prohibition per line.',ph:'Reschedule or cancel an appointment\nDiscuss prices\nRespond to complaints',ta:1}]},
+ {n:'Observation', q:'What do you want to see to know it\'s going well?', why:'What isn\'t observed can\'t be improved. It reports; you see.',
+  princ:'What isn\'t observed can\'t be improved.',
+  f:[{k:'relatorio',l:'What should it show you in the report?',h:'Simple numbers and the problems.',ph:'E.g.: Sent, confirmed, no response, errors',ta:1},
+     {k:'quandorel',l:'When?',h:'',ph:'E.g.: Every day at 5pm'}]},
+ {n:'Human supervision', q:'When should it call you? When do you review?', why:'AI executes; responsibility stays yours. That\'s managing, not just doing.',
+  princ:'Agents amplify human capacity; they don\'t eliminate judgment.',
+  f:[{k:'chamar',l:'In what situations does it stop and call you right away?',h:'One per line.',ph:'Patient complaining\nRequest to reschedule\nTwo patients at the same time',ta:1},
+     {k:'revisao',l:'When will you review its work?',h:'A fixed time. 10 minutes is enough.',ph:'E.g.: Every Friday, 10 minutes'}]}
+];
+
+/* ---------- ready examples ---------- */
+var PRESETS={
+ clinica:{rot:'🩺 Clinic',nome:'Appointment Confirmer',tarefa:'Confirm next day\'s appointments via WhatsApp',porque:'30% of patients miss appointments without notice and the schedule ends up empty',
+  regras:'Address people as Mr./Ms.\nMessages only between 9am and 5pm\nNo service on Saturdays',tom:'Polite, short, no slang',
+  fonte:'The clinic\'s scheduling system',naovale:'Old spreadsheets and paper notes don\'t count',faltando:'Let me know and never make anything up',
+  sucesso:'Every patient for tomorrow got a message and I have the list of who didn\'t reply',prazo:'Every day by 5pm',
+  acao:'executa',riscos:['irreversivel','fora'],proibido:'Reschedule or cancel an appointment\nDiscuss prices\nRespond to complaints',
+  relatorio:'Sent, confirmed, no response, errors',quandorel:'Every day at 5pm',
+  chamar:'Patient complaining\nRequest to reschedule\nTwo patients at the same time',revisao:'Every Friday, 10 minutes'},
+ loja:{rot:'🛍️ Store',nome:'Order Support Agent',tarefa:'Answer customers about order status, delivery time and returns',porque:'I lose 2 hours a day answering the same question and the customer is left waiting',
+  regras:'Always give the order number\nReturn window is 7 days\nDon\'t promise a delivery date that isn\'t in the system',tom:'Friendly, direct, using the customer\'s name',
+  fonte:'The store\'s order dashboard',naovale:'Whatever the customer claims to have bought, without an order number',faltando:'Ask for the order number; if not found, pass the case to me',
+  sucesso:'Every customer gets the right answer in under 1 hour and only the hard cases reach me',prazo:'During business hours',
+  acao:'executa',riscos:['dinheiro','fora'],proibido:'Give a discount or refund\nApprove a return outside the window\nPromise a free gift',
+  relatorio:'Interactions, most common questions, cases passed to me',quandorel:'Every day at 6pm',
+  chamar:'Angry customer or threatening to complain\nRefund request\nDefective product',revisao:'Monday, 15 minutes'},
+ contabil:{rot:'📊 Accounting office',nome:'Document Organizer',tarefa:'Check the documents clients send each month and list what\'s missing',porque:'At month-end closing the team loses days chasing invoices',
+  regras:'Each client has a folder with the company name\nSubmission deadline is the 5th\nDon\'t discuss amounts with third parties',tom:'Formal and objective',
+  fonte:'Each client\'s obligations list in the office\'s system',naovale:'Documents sent via WhatsApp without being logged in the folder',faltando:'Mark as "pending" and let me know, without assuming',
+  sucesso:'By the 6th I have, per client, what arrived and what\'s missing, with no errors',prazo:'Every month, by the 6th',
+  acao:'rascunho',riscos:[],proibido:'Send a payment reminder to the client\nDelete or move a document\nFill in data that isn\'t in the document',
+  relatorio:'Complete clients, clients with pending items and what\'s missing from each',quandorel:'The 6th of every month',
+  chamar:'Illegible or suspicious document\nClient who sent nothing\nAmount far outside the normal range',revisao:'The 6th, 20 minutes'},
+ professor:{rot:'🎓 Teacher',nome:'Grading Assistant',tarefa:'Do a first-pass review of student essays based on my rubric',porque:'I grade 120 essays a week and feedback reaches students too late',
+  regras:'Follow only my rubric\nComments always start with something positive\nLanguage suited to teenagers',tom:'Encouraging and clear',
+  fonte:'The subject\'s official rubric (attached document)',naovale:'Criteria from the internet or from other teachers',faltando:'Mark "needs review" and don\'t assign a grade',
+  sucesso:'Every essay has a suggested grade per criterion and 3 useful comments, and I just double-check',prazo:'By Sunday night',
+  acao:'rascunho',riscos:['fora'],proibido:'Enter a grade into the system\nSpeak directly to a student or family\nAccuse of plagiarism',
+  relatorio:'Suggested grades, essays flagged for review, most common class-wide errors',quandorel:'Sunday night',
+  chamar:'Suspicion of plagiarism or AI-written text\nConcerning content (bullying, risk)\nEssay off topic',revisao:'Monday morning, 20 minutes'}
+};
+
+var LEVELS=[
+ ['N0','Consults','Only answers and researches. Doesn\'t act.'],
+ ['N1','Recommends','Suggests and prepares drafts. You decide.'],
+ ['N2','Prepares, you approve','Gets everything ready; nothing goes out without your OK.'],
+ ['N3','Executes','Does it alone, within the rules, and reports back.'],
+ ['N4','Manages processes','Runs a whole process, with reports and alarms.']
+];
+
+var st={step:0, d:{}, preset:null};
+try{ var sv=JSON.parse(localStorage.getItem(KEY)||'null'); if(sv&&sv.d) st=sv; }catch(e){}
+function save(){ try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){} }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function lines(s){ return String(s||'').split('\n').map(function(x){return x.replace(/^[-•*\s]+/,'').trim();}).filter(Boolean); }
+function v(k,fb){ var x=st.d[k]; return (x&&String(x).trim())?String(x).trim():(fb||''); }
+function $(id){ return document.getElementById(id); }
+
+/* ---------- presets ---------- */
+var pw=$('presets');
+Object.keys(PRESETS).forEach(function(k){
+  var bt=document.createElement('button'); bt.textContent=PRESETS[k].rot; bt.dataset.k=k;
+  bt.onclick=function(){ var p=PRESETS[k]; st.d={}; Object.keys(p).forEach(function(x){ if(x!=='rot') st.d[x]=Array.isArray(p[x])?p[x].slice():p[x]; }); st.preset=k; st.step=0; save(); render(); $('prog').scrollIntoView({behavior:'smooth'}); };
+  pw.appendChild(bt);
+});
+var blank=document.createElement('button'); blank.textContent='✍️ Blank';
+blank.onclick=function(){ st={step:0,d:{},preset:null}; save(); render(); $('prog').scrollIntoView({behavior:'smooth'}); };
+pw.appendChild(blank);
+
+/* ---------- wizard ---------- */
+function render(){
+  [].forEach.call(pw.querySelectorAll('button'),function(x){ x.classList.toggle('on', x.dataset.k===st.preset); });
+  var pg=$('prog'); pg.innerHTML='';
+  for(var i=0;i<=STEPS.length;i++){ var it=document.createElement('i'); it.title=i<STEPS.length?(i+1)+'. '+STEPS[i].n:'Your sheet';
+    it.className=i===st.step?'cur':(i<st.step?'done':''); (function(j){ it.onclick=function(){ st.step=j; save(); render(); }; })(i); pg.appendChild(it); }
+  if(st.step>=STEPS.length){ $('wizard').style.display='none'; $('result').style.display='block'; buildResult(); return; }
+  $('wizard').style.display='block'; $('result').style.display='none';
+  var s=STEPS[st.step], h='<div class="panel"><div class="ptag">Question '+(st.step+1)+' of 7 · <span class="amb">'+s.n+'</span></div><h2>'+esc(s.q)+'</h2><p class="why">'+esc(s.why)+'</p>';
+  s.f.forEach(function(f){
+    h+='<label>'+esc(f.l)+(f.h?'<small>'+esc(f.h)+'</small>':'')+'</label>';
+    if(f.radio){ h+='<div class="opts">'+f.radio.map(function(o){ return '<label class="opt"><input type="radio" name="'+f.k+'" value="'+o[0]+'"'+(st.d[f.k]===o[0]?' checked':'')+'><div><b>'+o[1]+'</b><span>'+o[2]+'</span></div></label>'; }).join('')+'</div>'; }
+    else if(f.check){ var cur=st.d[f.k]||[]; h+='<div class="opts">'+f.check.map(function(o){ return '<label class="opt"><input type="checkbox" name="'+f.k+'" value="'+o[0]+'"'+(cur.indexOf(o[0])>=0?' checked':'')+'><div><b>'+o[1]+'</b><span>'+o[2]+'</span></div></label>'; }).join('')+'</div>'; }
+    else if(f.ta){ h+='<textarea data-k="'+f.k+'" placeholder="'+esc(f.ph)+'">'+esc(st.d[f.k]||'')+'</textarea>'; }
+    else { h+='<input type="text" data-k="'+f.k+'" placeholder="'+esc(f.ph)+'" value="'+esc(st.d[f.k]||'')+'">'; }
+  });
+  h+='<div class="princ"><b>Principle '+(st.step+1)+':</b> '+esc(s.princ)+'</div>';
+  h+='<div class="nav2"><button class="btn ghost" id="bk"'+(st.step===0?' disabled':'')+'>← Back</button><button class="btn" id="nx">'+(st.step===STEPS.length-1?'Generate my sheet ✨':'Next →')+'</button></div></div>';
+  var w=$('wizard'); w.innerHTML=h;
+  [].forEach.call(w.querySelectorAll('[data-k]'),function(el){ el.addEventListener('input',function(){ st.d[el.dataset.k]=el.value; save(); }); });
+  [].forEach.call(w.querySelectorAll('input[type=radio]'),function(el){ el.addEventListener('change',function(){ st.d[el.name]=el.value; save(); }); });
+  [].forEach.call(w.querySelectorAll('input[type=checkbox]'),function(el){ el.addEventListener('change',function(){
+    st.d[el.name]=[].map.call(w.querySelectorAll('input[name='+el.name+']:checked'),function(x){return x.value;}); save(); }); });
+  $('bk').onclick=function(){ st.step--; save(); render(); };
+  $('nx').onclick=function(){ st.step++; save(); render(); window.scrollTo({top:$('prog').offsetTop-80,behavior:'smooth'}); };
+}
+
+/* ---------- the level rule (the "magic") ---------- */
+function calcLevel(){
+  var a=st.d.acao||'rascunho', r=st.d.riscos||[], motivos=[], lvl;
+  var base={consulta:0,rascunho:1,executa:3,coordena:4}[a]; if(base==null) base=1;
+  lvl=base;
+  var risco=r.filter(function(x){return ['dinheiro','irreversivel','fora'].indexOf(x)>=0;});
+  if(lvl>=3 && risco.length){
+    lvl=2;
+    var nm={dinheiro:'involves money',irreversivel:'has an action that can\'t be undone',fora:'talks to outside people'};
+    var ps=risco.map(function(x){return nm[x];}), fr=ps.length>1?ps.slice(0,-1).join(', ')+' and '+ps[ps.length-1]:ps[0];
+    motivos.push('The task '+fr+'. So it prepares things and you approve before anything goes out.');
+  }
+  if(lvl>1 && !v('fonte')){ lvl=1; motivos.push('You haven\'t defined the official source of information yet. Without that, it can only suggest — never act.'); }
+  if(!motivos.length){
+    motivos.push(['It only answers and researches; it doesn\'t act in the world.','It only prepares and suggests; the decision stays yours.','',
+      'The task is internal and reversible, and an official source is defined: it can execute alone, reporting back.',
+      'Internal, reversible process with an official source: it can run the process — but with reports and alarms.'][lvl]);
+  }
+  var subir={0:'To level up: define the official source and let it prepare drafts (N1).',
+    1:'To reach N2: define the official source and use 2 weeks of drafts with no major error.',
+    2:'To reach N3: 4 straight weeks of approvals with no corrections needed — and only for the part that carries no risk.',
+    3:'To reach N4: 2 months of clean reports and the alarms (when it calls you) working well.',
+    4:'Maximum level. Keep the weekly review: high autonomy needs more observation, not less.'}[lvl];
+  return {n:lvl, motivos:motivos, subir:subir};
+}
+
+function modeLine(n){
+  return ['You may only consult, research and answer. Do not execute any action.',
+    'You may only suggest and prepare drafts. Never execute anything: I decide what to use.',
+    'You prepare everything, but NOTHING is sent, changed or executed without my explicit approval. Always show me first and wait for my "OK".',
+    'You may execute the task on your own, within the rules and prohibitions below, and report back to me.',
+    'You may run the whole process, within the rules and prohibitions below, with reports and alarms.'][n];
+}
+
+/* ---------- generate the package ---------- */
+var TABS=[['ficha','📄 Sheet'],['prompt','🤖 Ready instruction'],['testes','🧪 3 tests'],['check','✅ Checklist']];
+var curTab='ficha', TXT={};
+
+function buildResult(){
+  var L=calcLevel(), nome=v('nome','My Agent'), proib=lines(st.d.proibido), cham=lines(st.d.chamar), regras=lines(st.d.regras);
+  $('levelBox').innerHTML='<div class="big">'+LEVELS[L.n][0]+'</div><div><h3>Autonomy level: '+LEVELS[L.n][1]+'</h3><p>'+esc(L.motivos.join(' '))+'</p><p>'+esc(L.subir)+'</p></div>';
+  $('ladder').innerHTML=LEVELS.map(function(x,i){ return '<div class="'+(i===L.n?'on':'')+'"><b>'+x[0]+'</b>'+x[1]+'</div>'; }).join('');
+
+  var ul=function(a,fb){ return a.length?a.map(function(x){return '• '+x;}).join('\n'):(fb||'• (not defined)'); };
+
+  TXT.ficha='AGENT SHEET — '+nome.toUpperCase()+'\n\n'+
+    '1. MISSION (intent)\n'+v('tarefa','(define the task)')+'\nWhy it matters: '+v('porque','(define)')+'\n\n'+
+    '2. HOUSE RULES (context)\n'+ul(regras)+'\nTone: '+v('tom','polite and direct')+'\n\n'+
+    '3. SOURCE OF TRUTH (data)\nCounts: '+v('fonte','(NOT DEFINED — define before turning this on)')+'\nDoesn\'t count: '+v('naovale','—')+'\nIf missing or odd: '+v('faltando','let me know and never make anything up')+'\n\n'+
+    '4. SUCCESS (criteria)\n'+v('sucesso','(define)')+'\nDeadline: '+v('prazo','—')+'\n\n'+
+    '5. AUTONOMY — '+LEVELS[L.n][0]+' · '+LEVELS[L.n][1]+'\n'+L.motivos.join(' ')+'\nNever do alone:\n'+ul(proib)+'\n'+L.subir+'\n\n'+
+    '6. REPORT (observation)\n'+v('relatorio','results and errors')+'\nWhen: '+v('quandorel','at the end of each run')+'\n\n'+
+    '7. SUPERVISION\nCall me right away when:\n'+ul(cham)+'\nReview: '+v('revisao','every week, 10 minutes');
+
+  TXT.prompt='You are "'+nome+'", an assistant that works for me.\n\n'+
+    '## Your mission\n'+v('tarefa','(define the task)')+'.\nThis matters because: '+v('porque','(define)')+'. When in doubt, prioritize this.\n\n'+
+    '## House rules\n'+(regras.length?regras.map(function(x){return '- '+x;}).join('\n'):'- (no extra rules)')+'\n- Tone: '+v('tom','polite and direct')+'.\n\n'+
+    '## Where the information comes from\n- The official source is: '+v('fonte','(not yet defined — treat everything as a draft)')+'.\n'+(v('naovale')?'- Do not use: '+v('naovale')+'.\n':'')+
+    '- If information is missing, conflicting or odd: '+v('faltando','let me know and never make anything up')+'.\n- Never invent data, names, numbers or dates.\n\n'+
+    '## What "done well" means\n'+v('sucesso','(define)')+(v('prazo')?' Deadline: '+v('prazo')+'.':'')+'\nOnly consider the task complete when this is true.\n\n'+
+    '## Your autonomy level: '+LEVELS[L.n][0]+' ('+LEVELS[L.n][1]+')\n'+modeLine(L.n)+'\n'+
+    (proib.length?'You NEVER do alone:\n'+proib.map(function(x){return '- '+x;}).join('\n')+'\nIf asked to do any of these, say you\'ll pass it on to me and let me know.\n':'')+'\n'+
+    '## Stop and call me right away when\n'+(cham.length?cham.map(function(x){return '- '+x;}).join('\n'):'- Something breaks the rules above')+'\n- You\'re not sure what to do.\n\n'+
+    '## Report\n'+(v('quandorel')?v('quandorel')+', ':'When finished, ')+'give me: '+v('relatorio','what was done, what\'s pending and the errors')+'. Always include what went wrong — a hidden error is worse than a reported one.\n\n'+
+    'Before starting, confirm in 3 lines what you understood about your mission and your limits.';
+
+  var t1=v('fonte')?'Give it a case where the information in "'+v('fonte')+'" is incomplete or contradictory.':'Give it a case with missing information.';
+  TXT.testes='Run these 3 tests BEFORE trusting the agent. If it fails any, adjust the sheet and repeat.\n\n'+
+    'TEST 1 — Missing information (principle 3)\n'+t1+'\nExpected: '+v('faltando','it warns you and doesn\'t make anything up')+'.\n\n'+
+    'TEST 2 — Forbidden request (principle 5)\nAsk, as if you were a customer: "'+(proib[0]||'do something outside the rules')+'".\nExpected: it does NOT do it, explains it will pass it to you and lets you know.\n\n'+
+    'TEST 3 — Alarm situation (principle 7)\nSimulate: "'+(cham[0]||'an unusual situation')+'".\nExpected: it stops and calls you, instead of solving it on its own.\n\n'+
+    'BONUS — Success criteria (principle 4)\nAt the end of a round, compare with: "'+v('sucesso','(your criterion)')+'". Did it match? Then it\'s ready to run at level '+LEVELS[L.n][0]+'.';
+
+  TXT.check='SUPERVISION CHECKLIST — '+nome+'\n\n'+
+    'BEFORE TURNING IT ON\n☐ The 3 tests passed\n☐ The official source is up to date\n☐ Everyone knows there\'s an agent doing this\n\n'+
+    'EVERY DAY (2 minutes)\n☐ Read the report ('+v('quandorel','at the end of the day')+')\n☐ Handled the cases where it called me\n☐ Any errors? Noted in one line: date · what happened · the smallest fix\n\n'+
+    'EVERY WEEK — '+v('revisao','10 minutes')+'\n☐ Reread the errors logged this week\n☐ Adjusted ONE rule in the sheet (no more than one)\n☐ Was the success criterion met?\n\n'+
+    'EVERY MONTH\n☐ Is level '+LEVELS[L.n][0]+' still right? '+L.subir+'\n☐ Is the task still the same? If it changed, redo the sheet.\n\n'+
+    'Remember: autonomy grows with evidence. When in doubt, drop a level.';
+
+  var tb=$('tabs'); tb.innerHTML='';
+  TABS.forEach(function(x){ var bt=document.createElement('button'); bt.textContent=x[1]; bt.className=x[0]===curTab?'on':''; bt.onclick=function(){ curTab=x[0]; buildResult(); }; tb.appendChild(bt); });
+  $('panes').innerHTML=TABS.map(function(x){ return '<div class="tabpane" style="display:'+(x[0]===curTab?'block':'none')+'"><div class="out'+(x[0]==='prompt'?' mono':'')+'">'+esc(TXT[x[0]])+'</div></div>'; }).join('');
+}
+
+function toast(m){ var e=$('toast'); e.textContent=m||'Copied!'; e.classList.add('show'); setTimeout(function(){e.classList.remove('show');},1600); }
+function copy(txt,m){
+  var done=function(){ toast(m); };
+  if(navigator.clipboard&&window.isSecureContext){ navigator.clipboard.writeText(txt).then(done,fallback); } else fallback();
+  function fallback(){ var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); done(); }
+}
+$('copyBtn').onclick=function(){ copy(TXT[curTab]); };
+$('refineBtn').onclick=function(){
+  copy('I own a small business and put together the sheet below to delegate a task to an AI agent, following the 7 principles of agent management (intent, context, reliable data, success criteria, autonomy with limits, observation and human supervision).\n\n'+
+    'Do 3 things:\n1. Point out, in at most 5 items, what is vague, risky or missing.\n2. Ask me up to 3 short questions to fill in what\'s missing.\n3. After my answers, give me back the final INSTRUCTION rewritten, ready to paste, keeping the same autonomy level (or explaining why it should be LOWER — never higher).\n\n--- MY SHEET ---\n'+TXT.ficha,
+    'Copied! Paste it into ChatGPT or Claude');
+};
+$('printBtn').onclick=function(){ document.body.classList.add('printall'); window.print(); setTimeout(function(){document.body.classList.remove('printall');},500); };
+$('editBtn').onclick=function(){ st.step=0; save(); render(); window.scrollTo({top:$('prog').offsetTop-80,behavior:'smooth'}); };
+$('resetBtn').onclick=function(){ st={step:0,d:{},preset:null}; save(); render(); window.scrollTo({top:0,behavior:'smooth'}); };
+
+render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7 Principles of AI Agent Management — explained plainly</title>
+<meta name="description" content="The 7 principles of AI agent management in plain language: intent, context, data, success criteria, autonomy with limits, observation and human supervision — and how to apply them in 5 minutes.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/7pa/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/7pa/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/7pa/guia/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light nav{background:rgba(246,247,249,.85)}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:18px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb);white-space:nowrap}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:16px;font-size:.9rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(226,162,59,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:980px){nav .links a.sec{display:none}}
+  @media(max-width:560px){nav .brand .nm{display:none} nav .links .btn{display:none}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(226,162,59,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:70px 22px}
+  .hero h1{font-size:clamp(2.1rem,5vw,3.3rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.15rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:40ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;display:block}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:44px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:66ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .card .q{margin-top:.8em;padding-top:.8em;border-top:1px dashed var(--line);font-size:.88rem;color:var(--txt)}
+  .card .q b{color:var(--amb);font-family:Sora;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;display:block}
+  .card .pr{margin-top:.6em;font-size:.85rem;color:var(--amb2);font-style:italic}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(226,162,59,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  .flow.old span{opacity:.6}
+  .vs{display:grid;grid-template-columns:90px 1fr;gap:12px;align-items:center;margin:12px 0}
+  .vs .lbl{font-family:Sora;font-weight:800;color:var(--mut);font-size:.9rem} .vs .lbl.amb{color:var(--amb)}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font:.84rem/1.6 "JetBrains Mono",monospace;color:#d6d6e0;white-space:pre-wrap}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)}
+  .step{display:grid;grid-template-columns:46px 1fr;gap:16px;margin-bottom:26px}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 110px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  .phase.hl{background:rgba(226,162,59,.07);border-radius:12px;padding:16px 12px}
+  .quote{font-family:Sora;font-size:clamp(1.2rem,3vw,1.6rem);font-weight:800;text-align:center;max-width:32ch;margin:0 auto}
+  .secret{background:linear-gradient(135deg,rgba(226,162,59,.16),rgba(56,189,248,.06));border:1px solid var(--amb);border-radius:20px;padding:34px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+  .secret h2{font-size:clamp(1.4rem,3.2vw,2rem)}
+  .secret p{color:var(--mut);margin:.6em 0 0;max-width:60ch}
+  @media(max-width:700px){.secret{grid-template-columns:1fr;padding:24px}}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:4px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top">🧭 <span class="nm">7 Principles</span></a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#oque">The shift</a>
+    <a class="sec" href="#principios">The 7</a>
+    <a class="sec" href="#autonomia">Autonomy</a>
+    <a class="sec" href="#importa">What matters</a>
+    <a class="sec" href="#guia">How to use it</a>
+    <a class="sec" href="#segredo">Secret</a>
+    <span class="lang"><a href="../">PT</a><a class="on" href="./">EN</a><a href="../es/">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+    <a class="btn" href="../../en/">Build my sheet</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">AI agent management · straight to the point</span>
+      <h1>It's not enough to create agents. You have to <span class="amb">manage them</span>.</h1>
+      <p class="lead">Everything you need to understand about the new way of working with AI, in 7 principles, plus a tool that applies all 7 in 5 minutes.</p>
+      <div class="cta">
+        <a class="btn" href="../../en/">🧭 Build my Agent Sheet</a>
+        <a class="btn ghost" href="#oque">Understand it in 5 minutes</a>
+      </div>
+    </div>
+    <figure><img src="../assets/banner.jpg" alt="Agent Sheet: 7 questions, your AI agent ready and well managed"></figure>
+  </div>
+</header>
+
+<section id="oque"><div class="wrap">
+  <span class="chip">The shift</span>
+  <h2>AI stopped being a tool. It became part of the team.</h2>
+  <p class="sub">Before, you used AI to answer questions. Now it can interpret what you want, look up information, execute tasks and deliver a result, with more or less freedom. That changes your role.</p>
+  <div class="vs"><div class="lbl">BEFORE</div><div class="flow old"><span>You</span><span class="arr">→</span><span>run the process</span><span class="arr">→</span><span>result</span></div></div>
+  <div class="vs"><div class="lbl amb">NOW</div><div class="flow"><span>You</span><span class="arr">→</span><span>define the intent</span><span class="arr">→</span><span>organize the context</span><span class="arr">→</span><span>delegate</span><span class="arr">→</span><span>supervise</span><span class="arr">→</span><span>evaluate</span></div></div>
+  <div class="grid g3" style="margin-top:28px">
+    <div class="card"><h3>🎯 You say what, not how</h3><p>Instead of configuring every step, you define the goal, what counts as a good result, the limits and when it's done. AI decides part of the path.</p></div>
+    <div class="card"><h3>🗄️ Data becomes the foundation</h3><p>The agent is only as good as the information it uses. Someone has to say which source is official and who wins when two sources disagree.</p></div>
+    <div class="card"><h3>👔 You become the manager</h3><p>You move from "doing the task" to "managing the system that does the task": vision, context, judgment, evaluation and correction.</p></div>
+  </div>
+</div></section>
+
+<section id="principios"><div class="wrap">
+  <span class="chip">The 7 principles</span>
+  <h2>A cycle, not a list.</h2>
+  <p class="sub">Each principle answers a question you'd ask a new employee. The Agent Sheet asks exactly these questions for you.</p>
+  <div class="flow" style="margin-bottom:26px">
+    <span>1 Intent</span><span class="arr">→</span><span>2 Context</span><span class="arr">→</span><span>3 Data</span><span class="arr">→</span><span>4 Criteria</span><span class="arr">→</span><span>5 Autonomy</span><span class="arr">→</span><span>6 Observation</span><span class="arr">→</span><span>7 Supervision</span><span class="arr">↺</span>
+  </div>
+  <div class="grid g4">
+    <div class="card"><div class="num">1</div><h3>Intent</h3><p>The agent needs to know the goal, why it matters and what result is expected. Without that, it does the wrong task efficiently.</p><div class="q"><b>The question</b>What do you want off your plate, and why?</div><div class="pr">Before delegating, define the purpose.</div></div>
+    <div class="card"><div class="num">2</div><h3>Context</h3><p>Rules, examples, history, current state. But more context isn't better: the right amount is the minimum that produces the best decision.</p><div class="q"><b>The question</b>What would you explain on day 1 to someone newly hired?</div><div class="pr">The smallest context capable of the best decision.</div></div>
+    <div class="card"><div class="num">3</div><h3>Reliable data</h3><p>Official source, consistency, freshness, traceability. Wrong data in, wrong decision out.</p><div class="q"><b>The question</b>Where does the correct information come from? Who wins when two sources disagree?</div><div class="pr">No agent is better than its data.</div></div>
+    <div class="card"><div class="num">4</div><h3>Success criteria</h3><p>Metric, expected quality, acceptance condition, definition of "done". Without it, it finishes without solving anything.</p><div class="q"><b>The question</b>What does a perfect day look like for this?</div><div class="pr">Every delegation needs success defined.</div></div>
+    <div class="card"><div class="num">5</div><h3>Autonomy with limits</h3><p>Not every agent deserves the same freedom. It grows in levels, from N0 to N4, together with trust.</p><div class="q"><b>The question</b>What can it never do alone? What's the worst that can happen?</div><div class="pr">Autonomy grows with evidence and control.</div></div>
+    <div class="card"><div class="num">6</div><h3>Observation and evaluation</h3><p>Record results, errors, costs, time and decisions. Execution generates evidence; evidence generates learning.</p><div class="q"><b>The question</b>What do you want to see to know it's going well?</div><div class="pr">What isn't observed doesn't improve.</div></div>
+    <div class="card"><div class="num">7</div><h3>Human supervision</h3><p>AI executes within limits, but responsibility stays yours: goals, exceptions, corrections, evolution.</p><div class="q"><b>The question</b>When does it call you? When do you review?</div><div class="pr">Agents amplify; they don't replace judgment.</div></div>
+    <div class="card" style="border-color:var(--amb)"><div class="num">↺</div><h3>And back to 1</h3><p>What you learn in supervision adjusts intent, context and rules. That's how isolated agents become a working system.</p><div class="q"><b>The sum</b>People + Processes + Agents</div></div>
+  </div>
+</div></section>
+
+<section id="autonomia"><div class="wrap">
+  <span class="chip">Principle 5 in detail</span>
+  <h2>The autonomy ladder</h2>
+  <p class="sub">The more freedom, the more control. The agent starts low and climbs when it shows, with evidence, that it deserves to.</p>
+  <div class="phase"><div class="tag">N0</div><div class="d"><strong>Consults</strong><span>Answers and researches. Doesn't act on anything.</span></div></div>
+  <div class="phase"><div class="tag">N1</div><div class="d"><strong>Recommends</strong><span>Prepares drafts and suggestions. You decide what to use.</span></div></div>
+  <div class="phase hl"><div class="tag">N2</div><div class="d"><strong>Prepares, you approve</strong><span>Gets everything ready, but nothing goes out without your OK. The right level whenever money, an irreversible action, or outside people are involved.</span></div></div>
+  <div class="phase"><div class="tag">N3</div><div class="d"><strong>Executes</strong><span>Does it alone, within the rules, and reports back. Only for internal, reversible tasks.</span></div></div>
+  <div class="phase"><div class="tag">N4</div><div class="d"><strong>Manages processes</strong><span>Runs a whole process, with reports and alarms. Requires the strongest supervision.</span></div></div>
+  <pre style="margin-top:22px"><span class="c"># The rule the Agent Sheet uses to calculate your level</span>
+<span class="k">Involves money, an irreversible action, or outside people?</span>  → at most N2 (you approve)
+<span class="k">Internal and reversible?</span>                                    → can reach N3
+<span class="k">Only looks up information or drafts?</span>                       → N0 / N1
+<span class="k">No official source defined?</span>                                 → stays at N1, no exceptions</pre>
+</div></section>
+
+<section id="importa"><div class="wrap">
+  <span class="chip">What actually matters</span>
+  <h2>Strip away the marketing, and this is what's left.</h2>
+  <p class="sub">Reports about "the new era of agents" come loaded with promotional layers. This isn't an exclusive discovery of any one company: it's the consolidation of what already works in practice. After the filter, 5 truths remain.</p>
+  <div class="grid g3">
+    <div class="card"><h3>1 · Reliable data</h3><p>The agent finds conflicts and duplicates, but the organization decides which piece of information has authority.</p></div>
+    <div class="card"><h3>2 · Automation by intent</h3><p>You provide goal, context, constraints, criteria and expected result. The system chooses part of the path.</p></div>
+    <div class="card"><h3>3 · Explicit success</h3><p>It's not enough to say what to do. You need to say what's good, how to measure it and when it's actually done.</p></div>
+    <div class="card"><h3>4 · Limits</h3><p>Permissions, autonomy levels, human review, monitoring, policies and security. More autonomy, more control.</p></div>
+    <div class="card"><h3>5 · The bottleneck shifted</h3><p>The hard part is no longer executing. It's defining intent well, building context, organizing data, evaluating and correcting.</p></div>
+    <div class="card"><h3>+ Demo isn't production</h3><p>Working in a demo proves nothing. In real use, what matters is stability, repeatability, safety and how it handles the unexpected.</p></div>
+  </div>
+  <p class="quote" style="margin-top:44px">The new discipline isn't "using AI."<br>It's <span class="amb">AI Agent Management</span>.</p>
+</div></section>
+
+<section id="guia"><div class="wrap">
+  <span class="chip">User guide · Agent Sheet</span>
+  <h2>Apply the 7 principles in 5 minutes</h2>
+  <p class="sub">The Agent Sheet is a free page that runs in your browser. Nothing is sent anywhere. You answer, it builds.</p>
+
+  <div class="step"><div class="b">1</div><div>
+    <h3>Open the Sheet and pick a starting point</h3>
+    <p>Click a ready example (clinic, store, accounting office, teacher) and adjust it to your case, or start blank.</p>
+    <a class="btn" href="../../en/">Open the Agent Sheet</a>
+  </div></div>
+
+  <div class="step"><div class="b">2</div><div>
+    <h3>Answer the 7 questions, one screen at a time</h3>
+    <p>Write the way you'd talk to a person. Every field has an example. On question 5, check whether the task involves money, an irreversible action, or outside people.</p>
+  </div></div>
+
+  <div class="step"><div class="b">3</div><div>
+    <h3>Get the ready-made package</h3>
+    <p>There are 4 tabs: the <b>Sheet</b> (a summary of your agent's 7 principles), the <b>Ready instruction</b> (to paste into ChatGPT, Claude or Gemini), the <b>3 tests</b> and the supervision <b>Checklist</b>. At the top, the calculated autonomy level and what's needed to level up.</p>
+<pre><span class="c"># excerpt from a generated instruction</span>
+## Your autonomy level: N2 (Prepares, you approve)
+You prepare everything, but NOTHING is sent, changed or executed
+without my explicit approval. Always show me first and wait for my "OK".</pre>
+  </div></div>
+
+  <div class="step"><div class="b">4</div><div>
+    <h3>Test before you trust</h3>
+    <p>Run the 3 tests: missing information, forbidden request and alarm situation. Did it fail one? Adjust the sheet. Want to polish it? The <b>✨ Refine with AI</b> button copies a request for ChatGPT/Claude to review your sheet.</p>
+  </div></div>
+
+  <div class="step"><div class="b">5</div><div>
+    <h3>Supervise with the checklist</h3>
+    <p>2 minutes a day reading the report, 10 minutes a week adjusting one rule. Autonomy only grows with evidence. When in doubt, drop a level.</p>
+  </div></div>
+</div></section>
+
+<section id="exemplo"><div class="wrap">
+  <span class="chip">Real example</span>
+  <h2>Dr. Ana and the Appointment Confirmer</h2>
+  <p class="sub">30% of patients missed appointments without notice. In 5 minutes with the Sheet, she came out with this:</p>
+  <div class="grid g2">
+    <div class="card"><h3>🎯 Mission</h3><p>Confirm next day's appointments via WhatsApp, to reduce no-shows.</p></div>
+    <div class="card"><h3>🗄️ Source of truth</h3><p>The clinic's scheduling system. Spreadsheets don't count. Something odd: it flags it, never guesses.</p></div>
+    <div class="card"><h3>🛡️ Level N2: prepares, she approves</h3><p>Because it talks to patients and a sent message can't be undone. Forbidden: rescheduling, cancelling, discussing prices. Moves to N3 after 4 error-free weeks.</p></div>
+    <div class="card"><h3>👁️ Report and review</h3><p>At 5pm: sent, confirmed, no response, errors. Calls right away if there's a complaint. Review every Friday, 10 minutes.</p></div>
+  </div>
+</div></section>
+
+<section id="segredo" style="border-bottom:none"><div class="wrap">
+  <div class="secret">
+    <div>
+      <span class="chip">🔓 The secret revealed</span>
+      <h2>So, what are these texts, really?</h2>
+      <p>There's a reading behind the report, the analysis and the infographic, and it changes how you see all of this. Spoiler: you probably already practice at least 5 of the 7 principles, just under a different name.</p>
+    </div>
+    <a class="btn" href="https://inematds.github.io/7pa-segredo/en/">Reveal the secret →</a>
+  </div>
+</div></section>
+
+<section id="roadmap"><div class="wrap">
+  <span class="chip">Sources and next steps</span>
+  <h2>Where it comes from and where it's going</h2>
+  <p class="sub">The original material is in the repository: <a href="https://github.com/inematds/7pa/tree/main/conteudo">report, analysis and the 7 principles</a>.</p>
+  <div class="phase"><div class="tag">Now</div><div class="d"><strong>Agent Sheet + this guide</strong><span>7 questions, calculated level, ready instruction, 3 tests, checklist. In Portuguese, English and Spanish.</span></div></div>
+  <div class="phase"><div class="tag">Next</div><div class="d"><strong>Gallery of ready sheets and videos</strong><span>10 cases by field (real estate, law, restaurants, schools…), a short reel and an explainer video.</span></div></div>
+  <div class="phase"><div class="tag">Later</div><div class="d"><strong>Audit of your agent</strong><span>Paste the instruction you already use and get a score across the 7 principles, with what's missing.</span></div></div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">Static HTML</div><div class="pill">Runs in the browser</div><div class="pill">No login</div><div class="pill">PT · EN · ES</div>
+    <p style="margin-top:18px">7 Principles of AI Agent Management ·
+      <a href="https://github.com/inematds/7pa">github.com/inematds/7pa</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var KEY='7pa-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    try{ if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; } }catch(e){}
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      try{ localStorage.setItem(KEY, light?'light':'dark'); }catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>
