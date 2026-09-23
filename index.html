@@ -52,6 +52,7 @@
   .presets{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:22px 0 6px}
   .presets button{background:var(--card);border:1px solid var(--line);color:var(--txt);padding:.55em 1em;border-radius:999px;cursor:pointer;font-family:Sora;font-size:.88rem}
   .presets button:hover,.presets button.on{border-color:var(--amb);color:var(--amb)}
+  .presets .galink{padding:.55em 1em;border-radius:999px;border:1px dashed var(--amb);font-family:Sora;font-size:.88rem}
   .prog{display:flex;gap:6px;margin:26px 0 10px}
   .prog i{flex:1;height:6px;border-radius:9px;background:var(--line);cursor:pointer}
   .prog i.done{background:var(--amb2);opacity:.55} .prog i.cur{background:var(--amb)}
@@ -116,6 +117,7 @@
   </span>
   <div class="links">
     <a class="sec" href="guia/">Entenda os 7 princípios</a>
+    <a class="sec" href="galeria/">Galeria</a>
     <a class="sec" href="https://inematds.github.io/7pa-segredo/">O segredo</a>
     <span class="lang"><a class="on" href="./">PT</a><a href="en/">EN</a><a href="es/">ES</a></span>
     <button class="tgl" id="themeToggle" aria-label="Alternar tema" title="Alternar tema">🌙</button>
@@ -164,6 +166,7 @@
 
 <div class="toast" id="toast">Copiado!</div>
 
+<script src="data/presets.pt.js"></script>
 <script>
 (function(){
 'use strict';
@@ -216,37 +219,8 @@ var STEPS=[
      {k:'revisao',l:'Quando você vai revisar o trabalho dele?',h:'Um horário fixo. 10 minutos bastam.',ph:'Ex.: Toda sexta, 10 minutos'}]}
 ];
 
-/* ---------- exemplos prontos ---------- */
-var PRESETS={
- clinica:{rot:'🩺 Clínica',nome:'Confirmador de Consultas',tarefa:'Confirmar pelo WhatsApp as consultas do dia seguinte',porque:'30% dos pacientes faltam sem avisar e a agenda fica vazia',
-  regras:'Tratar por senhor/senhora\nMensagens só entre 9h e 17h\nSábado não tem atendimento',tom:'Cordial, curto, sem gírias',
-  fonte:'A agenda do sistema da clínica',naovale:'Planilha antiga e anotações de papel não valem',faltando:'Me avisar e não inventar nada',
-  sucesso:'Todo paciente de amanhã recebeu mensagem e eu tenho a lista de quem não respondeu',prazo:'Todo dia até as 17h',
-  acao:'executa',riscos:['irreversivel','fora'],proibido:'Remarcar ou cancelar consulta\nFalar de valores\nResponder reclamação',
-  relatorio:'Enviados, confirmados, não responderam, erros',quandorel:'Todo dia às 17h',
-  chamar:'Paciente reclamando\nPedido de remarcação\nDois pacientes no mesmo horário',revisao:'Toda sexta, 10 minutos'},
- loja:{rot:'🛍️ Loja',nome:'Atendente de Pedidos',tarefa:'Responder clientes sobre status de pedido, prazo de entrega e trocas',porque:'Perco 2 horas por dia respondendo a mesma pergunta e o cliente fica esperando',
-  regras:'Sempre informar o número do pedido\nPrazo de troca é 7 dias\nNão prometer data de entrega que não está no sistema',tom:'Simpático, direto, usando o nome do cliente',
-  fonte:'O painel de pedidos da loja',naovale:'O que o cliente diz que comprou, sem número de pedido',faltando:'Pedir o número do pedido; se não achar, me passar o caso',
-  sucesso:'Todo cliente recebe resposta certa em menos de 1 hora e só os casos difíceis chegam até mim',prazo:'Durante o horário comercial',
-  acao:'executa',riscos:['dinheiro','fora'],proibido:'Dar desconto ou reembolso\nAprovar troca fora do prazo\nPrometer brinde',
-  relatorio:'Atendimentos, dúvidas mais comuns, casos passados pra mim',quandorel:'Todo dia às 18h',
-  chamar:'Cliente irritado ou ameaçando reclamar\nPedido de reembolso\nProduto com defeito',revisao:'Segunda-feira, 15 minutos'},
- contabil:{rot:'📊 Escritório contábil',nome:'Organizador de Documentos',tarefa:'Conferir os documentos que os clientes mandam no mês e listar o que está faltando',porque:'No fechamento do mês a equipe perde dias correndo atrás de nota fiscal',
-  regras:'Cada cliente tem uma pasta com o nome da empresa\nPrazo de envio é dia 5\nNão comentar valores com terceiros',tom:'Formal e objetivo',
-  fonte:'A lista de obrigações de cada cliente no sistema do escritório',naovale:'Documentos enviados por WhatsApp sem registro na pasta',faltando:'Marcar como "pendente" e me avisar, sem supor',
-  sucesso:'No dia 6 eu tenho, por cliente, o que chegou e o que falta, sem erro',prazo:'Todo mês, até o dia 6',
-  acao:'rascunho',riscos:[],proibido:'Enviar cobrança para o cliente\nApagar ou mover documento\nPreencher dado que não está no documento',
-  relatorio:'Clientes completos, clientes com pendência e o que falta de cada um',quandorel:'Dia 6 de cada mês',
-  chamar:'Documento ilegível ou suspeito\nCliente que não mandou nada\nValor muito fora do normal',revisao:'Dia 6, 20 minutos'},
- professor:{rot:'🎓 Professor',nome:'Assistente de Correção',tarefa:'Fazer uma primeira correção das redações dos alunos com base na minha rubrica',porque:'Corrigo 120 redações por semana e o retorno chega tarde demais pro aluno',
-  regras:'Seguir só a minha rubrica\nComentário sempre começa por um ponto positivo\nLinguagem adequada para adolescentes',tom:'Encorajador e claro',
-  fonte:'A rubrica oficial da disciplina (documento anexado)',naovale:'Critérios da internet ou de outros professores',faltando:'Marcar "revisar" e não dar nota',
-  sucesso:'Cada redação tem nota sugerida por critério e 3 comentários úteis, e eu só confiro',prazo:'Até domingo à noite',
-  acao:'rascunho',riscos:['fora'],proibido:'Lançar nota no sistema\nFalar diretamente com aluno ou família\nAcusar plágio',
-  relatorio:'Notas sugeridas, redações marcadas pra revisar, erros mais comuns da turma',quandorel:'Domingo à noite',
-  chamar:'Suspeita de plágio ou de texto feito por IA\nConteúdo preocupante (bullying, risco)\nRedação fora do tema',revisao:'Segunda de manhã, 20 minutos'}
-};
+/* ---------- exemplos prontos (data/presets.pt.js) ---------- */
+var PRESETS=window.PRESETS_7PA||{}, ORDER=window.PRESETS_7PA_ORDER||Object.keys(PRESETS);
 
 var LEVELS=[
  ['N0','Consulta','Só responde e pesquisa. Não age.'],
@@ -266,11 +240,16 @@ function $(id){ return document.getElementById(id); }
 
 /* ---------- presets ---------- */
 var pw=$('presets');
-Object.keys(PRESETS).forEach(function(k){
+function loadPreset(k){ var p=PRESETS[k]; if(!p) return; st.d={}; Object.keys(p).forEach(function(x){ if(x!=='rot'&&x!=='area') st.d[x]=Array.isArray(p[x])?p[x].slice():p[x]; }); st.preset=k; st.step=0; save(); }
+ORDER.slice(0,4).forEach(function(k){
   var bt=document.createElement('button'); bt.textContent=PRESETS[k].rot; bt.dataset.k=k;
-  bt.onclick=function(){ var p=PRESETS[k]; st.d={}; Object.keys(p).forEach(function(x){ if(x!=='rot') st.d[x]=Array.isArray(p[x])?p[x].slice():p[x]; }); st.preset=k; st.step=0; save(); render(); $('prog').scrollIntoView({behavior:'smooth'}); };
+  bt.onclick=function(){ loadPreset(k); render(); $('prog').scrollIntoView({behavior:'smooth'}); };
   pw.appendChild(bt);
 });
+var gal=document.createElement('a'); gal.href='galeria/'; gal.className='galink'; gal.textContent='📚 +'+Math.max(0,ORDER.length-4)+' na galeria';
+pw.appendChild(gal);
+var qp=(location.search.match(/[?&]preset=([a-z]+)/)||[])[1];
+if(qp&&PRESETS[qp]){ loadPreset(qp); try{history.replaceState(null,'',location.pathname);}catch(e){} setTimeout(function(){ $('prog').scrollIntoView({behavior:'smooth'}); },200); }
 var blank=document.createElement('button'); blank.textContent='✍️ Em branco';
 blank.onclick=function(){ st={step:0,d:{},preset:null}; save(); render(); $('prog').scrollIntoView({behavior:'smooth'}); };
 pw.appendChild(blank);

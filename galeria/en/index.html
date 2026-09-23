@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Sheet Gallery — 10 ready AI agents</title>
+<meta name="description" content="10 ready AI agent sheets, one per area (clinic, store, accounting, school, real estate, law, restaurant, nonprofit, salon, agency), from level N0 to N4. Open, tweak and use.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/7pa/galeria/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/7pa/galeria/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/7pa/galeria/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light nav{background:rgba(246,247,249,.85)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+  .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:14px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;color:var(--amb);white-space:nowrap}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:16px;font-size:.9rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(226,162,59,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:1.05rem}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.55em 1em;border-radius:10px;font-family:Sora;font-size:.9rem;border:none;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:820px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .brand .nm{display:none} nav .links .btn{display:none}}
+  .hero{padding:48px 0 18px;text-align:center}
+  .hero h1{font-size:clamp(1.9rem,5vw,2.9rem);font-weight:800;letter-spacing:-.025em}
+  .hero p{color:var(--mut);max-width:60ch;margin:.9em auto 0;font-size:1.05rem}
+  .filters{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:26px 0 8px}
+  .filters button{background:var(--card);border:1px solid var(--line);color:var(--mut);padding:.45em .9em;border-radius:999px;cursor:pointer;font-family:Sora;font-size:.84rem}
+  .filters button.on{color:var(--amb);border-color:var(--amb)}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;color:var(--mut);font-size:.8rem;margin-bottom:26px}
+  .legend b{font-family:Sora;color:var(--txt)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;padding-bottom:40px}
+  @media(max-width:360px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px}
+  .card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .card .rot{font-family:Sora;font-size:.8rem;color:var(--mut)}
+  .card h3{font-size:1.12rem;margin-top:.2em}
+  .lv{flex:0 0 auto;text-align:center;border:1px solid var(--amb);border-radius:10px;padding:4px 9px;background:rgba(226,162,59,.1)}
+  .lv b{display:block;font-family:Sora;font-size:1.15rem;color:var(--amb);line-height:1.1}
+  .lv span{font-size:.64rem;color:var(--mut);display:block;max-width:92px;line-height:1.2}
+  .card p{margin:0;color:var(--mut);font-size:.92rem}
+  .card .mis{color:var(--txt)}
+  .card .lbl{font-family:Sora;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amb);margin-bottom:2px}
+  .card ul{margin:0;padding-left:1.1em;color:var(--mut);font-size:.88rem}
+  .card .acts{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap;padding-top:6px}
+  .why{font-size:.82rem;color:var(--mut);border-left:3px solid var(--amb);padding:6px 10px;background:var(--bg2);border-radius:0 8px 8px 0}
+  .cta{text-align:center;padding:30px 0 50px;border-top:1px solid var(--line)}
+  .cta p{color:var(--mut);margin:.4em 0 1.2em}
+  footer{padding:30px 0;text-align:center;color:var(--mut);font-size:.9rem;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="../../en/">🧭 <span class="nm">Agent Sheet</span></a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="../../guia/en/">The 7 principles</a>
+    <a class="sec" href="https://inematds.github.io/7pa-segredo/en/">The secret</a>
+    <span class="lang"><a href="../">PT</a><a class="on" href="./">EN</a><a href="../es/">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+    <a class="btn" href="../../en/">Build mine</a>
+  </div>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <span class="chip">Gallery · ready sheets</span>
+  <h1>10 ready AI agents. <span class="amb">Pick the one closest to you.</span></h1>
+  <p>Each sheet already answers the 7 questions for a different area, from level N0 to N4. Open it in the Agent Sheet, swap in what's specific to your business, and walk away with the instruction, the tests and the checklist.</p>
+  <div class="filters" id="filters"></div>
+  <div class="legend">
+    <span><b>N0</b> consults</span><span><b>N1</b> recommends</span><span><b>N2</b> prepares, you approve</span><span><b>N3</b> executes</span><span><b>N4</b> manages processes</span>
+  </div>
+</div></header>
+
+<main class="wrap"><div class="grid" id="grid"></div></main>
+
+<section class="cta"><div class="wrap">
+  <h2>Didn't find your area?</h2>
+  <p>Start from scratch. It's 7 questions and about 5 minutes.</p>
+  <a class="btn" href="../../en/">🧭 Build my sheet</a>
+</div></section>
+
+<footer><div class="wrap">
+  Gallery of the <a href="../../en/">Agent Sheet</a> · <a href="../../guia/en/">7 Principles of AI Agent Management</a> · <a href="https://inema.club">INEMA.CLUB</a>
+</div></footer>
+
+<script src="../../data/presets.en.js"></script>
+<script>
+(function(){
+'use strict';
+var T={all:'All', open:'Open in the Sheet', never:'Never does alone', calls:'Calls you when', mission:'Mission',
+  lv:['Consults','Recommends','Prepares, you approve','Executes','Manages processes'],
+  why:{risk:'N2 ceiling: involves money, an irreversible action or outside people.', nofonte:'No official source, stays at N1.',
+       base:['Only researches and answers.','Only prepares; you decide.','','Internal, reversible and with an official source.','Internal process, reversible and with an official source.']}};
+var P=window.PRESETS_7PA||{}, ORDER=window.PRESETS_7PA_ORDER||Object.keys(P), filtro='all';
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function lines(s){ return String(s||'').split('\n').map(function(x){return x.trim();}).filter(Boolean); }
+/* same rule as the Agent Sheet */
+function level(p){
+  var n={consulta:0,rascunho:1,executa:3,coordena:4}[p.acao]; if(n==null) n=1;
+  var r=(p.riscos||[]).filter(function(x){return ['dinheiro','irreversivel','fora'].indexOf(x)>=0;}), why=T.why.base[n];
+  if(n>=3&&r.length){ n=2; why=T.why.risk; }
+  if(n>1&&!String(p.fonte||'').trim()){ n=1; why=T.why.nofonte; }
+  return {n:n, why:why};
+}
+var areas=[]; ORDER.forEach(function(k){ var a=P[k]&&P[k].area; if(a&&areas.indexOf(a)<0) areas.push(a); });
+function renderFilters(){
+  var f=document.getElementById('filters'), opts=[['all',T.all]].concat([0,1,2,3,4].map(function(i){return ['N'+i,'N'+i];})).concat(areas.map(function(a){return [a,a];}));
+  f.innerHTML=opts.map(function(o){ return '<button data-f="'+esc(o[0])+'" class="'+(o[0]===filtro?'on':'')+'">'+esc(o[1])+'</button>'; }).join('');
+  [].forEach.call(f.querySelectorAll('button'),function(b){ b.onclick=function(){ filtro=b.dataset.f; renderFilters(); renderGrid(); }; });
+}
+function renderGrid(){
+  document.getElementById('grid').innerHTML=ORDER.filter(function(k){ var p=P[k]; if(!p) return false; if(filtro==='all') return true; if(/^N\d$/.test(filtro)) return 'N'+level(p).n===filtro; return p.area===filtro; })
+  .map(function(k){
+    var p=P[k], L=level(p), pr=lines(p.proibido).slice(0,3), ch=lines(p.chamar).slice(0,2);
+    return '<article class="card"><div class="top"><div><div class="rot">'+esc(p.rot)+'</div><h3>'+esc(p.nome)+'</h3></div>'+
+      '<div class="lv"><b>N'+L.n+'</b><span>'+esc(T.lv[L.n])+'</span></div></div>'+
+      '<div><div class="lbl">'+T.mission+'</div><p class="mis">'+esc(p.tarefa)+'</p></div>'+
+      '<div class="why">'+esc(L.why)+'</div>'+
+      '<div><div class="lbl">'+T.never+'</div><ul>'+pr.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>'+
+      '<div><div class="lbl">'+T.calls+'</div><ul>'+ch.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>'+
+      '<div class="acts"><a class="btn" href="../../en/?preset='+k+'">'+T.open+' →</a></div></article>';
+  }).join('');
+}
+renderFilters(); renderGrid();
+var b=document.body, t=document.getElementById('themeToggle');
+try{ if(localStorage.getItem('7pa-theme')==='light'){ b.classList.add('light'); t.textContent='☀️'; } }catch(e){}
+t.addEventListener('click',function(){ var l=b.classList.toggle('light'); t.textContent=l?'☀️':'🌙'; try{localStorage.setItem('7pa-theme',l?'light':'dark');}catch(e){} });
+})();
+</script>
+</body>
+</html>

@@ -8,6 +8,7 @@
 | | Português | English | Español |
 |---|---|---|---|
 | 🧭 **Ficha do Agente** (a ferramenta) | [abrir](https://inematds.github.io/7pa/) | [open](https://inematds.github.io/7pa/en/) | [abrir](https://inematds.github.io/7pa/es/) |
+| 📚 **Galeria** (10 fichas prontas) | [ver](https://inematds.github.io/7pa/galeria/) | [view](https://inematds.github.io/7pa/galeria/en/) | [ver](https://inematds.github.io/7pa/galeria/es/) |
 | 📖 **Guia** (o conteúdo explicado) | [ler](https://inematds.github.io/7pa/guia/) | [read](https://inematds.github.io/7pa/guia/en/) | [leer](https://inematds.github.io/7pa/guia/es/) |
 | 🔓 **O segredo revelado** | [revelar](https://inematds.github.io/7pa-segredo/) | [reveal](https://inematds.github.io/7pa-segredo/en/) | [revelar](https://inematds.github.io/7pa-segredo/es/) |
 
@@ -77,6 +78,39 @@ A nova disciplina não é "usar IA". É **Gestão de Agentes de IA**.
 
 Prefere conversar? Use o **[prompt entrevistador](prompts/entrevistador.md)**: cole no ChatGPT/Claude e ele faz as 7 perguntas pra você.
 
+### 6. Galeria: 10 fichas prontas
+
+Uma ficha por área, cobrindo todos os níveis. Abra, troque o que for do seu negócio e use. → **[galeria](https://inematds.github.io/7pa/galeria/)**
+
+| Área | Agente | Nível |
+|---|---|---|
+| ⚖️ Advocacia | Pesquisador Jurídico | N0 |
+| 📊 Escritório contábil | Organizador de Documentos | N1 |
+| 🎓 Professor | Assistente de Correção | N1 |
+| 💇 Salão de beleza | Criador de Posts | N1 |
+| 🩺 Clínica | Confirmador de Consultas | N2 |
+| 🛍️ Loja | Atendente de Pedidos | N2 |
+| 🏠 Imobiliária | Triador de Interessados | N2 |
+| 🤝 ONG / Igreja | Coordenador de Voluntários | N2 |
+| 🍽️ Restaurante | Controlador de Estoque | N3 |
+| 📈 Agência de marketing | Relator de Campanhas | N4 |
+
+Os dados ficam em `data/presets.{pt,en,es}.js`, usados pela Ficha e pela galeria. Link direto pra um exemplo: `?preset=<chave>` (ex.: `/7pa/?preset=restaurante`).
+
+### 7. Skill `/ficha-agente` (Claude Code)
+
+Pra quem trabalha no terminal. Ela faz a entrevista das 7 perguntas, calcula o nível pela mesma regra e grava um `AGENTE.md` com a ficha, a instrução pronta, os 3 testes, o checklist e uma tabela de registro de falhas. Se o agente for de código, sugere o modo de permissão equivalente (N0/N1 → plano, N2 → padrão com aprovação, N3 → aceitar edições, N4 → só com hooks). Também **audita** um prompt, `CLAUDE.md` ou `AGENTS.md` que você já usa, dando nota de 0 a 2 em cada princípio.
+
+```bash
+# instalar
+git clone https://github.com/inematds/7pa.git
+ln -s "$PWD/7pa/skill/ficha-agente" ~/.claude/skills/ficha-agente
+
+# usar
+/ficha-agente quero delegar a confirmação de consultas da minha clínica
+/ficha-agente audita o meu CLAUDE.md
+```
+
 ### 🔓 O segredo
 
 Afinal, o que são esses textos? Tem uma leitura por trás do relatório, da análise e do infográfico, e ela muda tudo. → **[inematds.github.io/7pa-segredo](https://inematds.github.io/7pa-segredo/)**
@@ -90,6 +124,9 @@ index.html              # Ficha do Agente (PT) — roda 100% no navegador, sem l
 en/ · es/               # Ficha do Agente em inglês e espanhol
 guia/index.html         # o conteúdo explicado (PT) + guia/en/ + guia/es/
 guia/assets/            # banner e imagens
+galeria/                # galeria das 10 fichas (PT) + galeria/en/ + galeria/es/
+data/presets.*.js       # as 10 fichas prontas, por idioma
+skill/ficha-agente/     # skill do Claude Code (/ficha-agente)
 prompts/entrevistador.md# versão "conversa" pra colar no ChatGPT/Claude
 conteudo/               # material original: relatório, análise, 7 princípios
 capa/capa.png           # capa do catálogo INEMA
