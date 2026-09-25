@@ -24,9 +24,9 @@ Nunca use menu/AskUserQuestion. Linguagem de dono de negócio, sem jargão. Se a
 | 1 | Intenção | O que você quer tirar da sua mão? Por que isso importa? | nome do agente, tarefa, porque |
 | 2 | Contexto | Se contratasse alguém hoje pra isso, o que explicaria no 1º dia? | regras da casa, tom |
 | 3 | Dados | De onde vem a informação certa? O que não vale? Se faltar, o que ele faz? | fonte, não vale, se faltar |
-| 4 | Critério | Como é um dia em que isso ficou perfeito? Até quando? | sucesso, prazo |
+| 4 | Critério | Como é um dia em que isso ficou perfeito? Até quando? Que número mostra isso, e o que não pode piorar junto? Tem uns 20 casos reais com a resposta certa? | sucesso, prazo, métrica principal, 1–2 guardas, gabarito |
 | 5 | Autonomia | Ele só pesquisa, prepara, executa ou toca um processo inteiro? Envolve dinheiro? Algo irreversível? Gente de fora? O que NUNCA faz sozinho? | ação, riscos, proibições |
-| 6 | Observação | O que quer ver no relatório? Quando? | relatório, quando |
+| 6 | Observação | O que quer ver no relatório? Quando? De quanto em quanto tempo revisa os erros pra ajustar uma regra? | relatório, quando, cadência do loop |
 | 7 | Supervisão | Quando ele para e te chama? Quando você revisa? | gatilhos, revisão |
 
 ### 3. Calcular o nível (regra fixa — não "ache", aplique)
@@ -62,9 +62,18 @@ formato e horário do relatório, incluindo erros; "antes de começar, confirme 
 ## Checklist de supervisão
 Antes de ligar · Todo dia (2 min) · Toda semana (10 min, ajustar UMA regra) · Todo mês (o nível ainda é o certo?)
 
+## Loop de melhoria
+Métrica principal: <…> · Guardas: <…> · Gabarito: <arquivo, N casos, parte escondida> · Revisão: <cadência>
+Cada ajuste é um ciclo: hipótese → mudança numa cópia → teste no gabarito → **você decide** se promove.
+
 ## Registro de falhas
-| data | o que quebrou | menor correção | regra da ficha alterada |
+| data | o que quebrou | menor correção | regra da ficha alterada | ciclo |
 ```
+
+Se a pessoa não tiver métrica ou gabarito, marque `[DEFINIR]` e diga que sem isso o agente não aprende, só repete (o ajuste semanal vira palpite). Não invente números.
+
+### 4b. Quando o agente estiver estável (N2 ou mais) — ligar o loop
+A ficha é o ponto de partida; o que faz o agente melhorar com o uso é o **loop de melhoria** (executar → medir → criticar → propor → testar → validar → promover). Quando a pessoa quiser automatizar os ajustes com registro e botão de voltar, aponte o framework **LOOP-R** (https://inematds.github.io/loop-r/guia/, skill `/loop-r iniciar` no repo `inematds/loop-r`): as respostas 4, 5 e 6 da ficha já são métrica, limites e cadência que ele pede. Regra que não muda: o sistema **propõe**, o humano **promove** — nenhuma versão pior substitui a atual por decisão do agente.
 
 Depois de gravar, mostre na conversa só: o nível + motivo, o caminho do arquivo e os 3 testes. Não despeje o arquivo inteiro.
 
@@ -75,7 +84,7 @@ Traduza o nível para a configuração real e acrescente uma seção `## Configu
 |---|---|---|
 | N0 · N1 | modo plano (`plan`) — só lê e propõe | instrução no `CLAUDE.md`/`AGENTS.md` |
 | N2 | modo padrão — pede aprovação a cada edição/comando | proibições como regras `deny` nas permissões |
-| N3 | `acceptEdits` — edita sozinho, comandos continuam pedindo | testes/build como critério de pronto; `FALHAS.md` |
+| N3 | `acceptEdits` — edita sozinho, comandos continuam pedindo | testes/build como critério de pronto; `FALHAS.md`; ajustes pelo loop (`/loop-r`) com gabarito |
 | N4 | só com hooks que bloqueiam o irreversível (push, deploy, delete) + ambiente isolado | nunca "bypass" em repo com produção |
 
 Não altere `settings.json` sozinho: proponha o trecho e aplique só se a pessoa pedir.
