@@ -1,6 +1,6 @@
 ---
 name: ficha-agente
-description: Monta a FICHA DO AGENTE de uma tarefa delegada a IA pelos 7 princípios da gestão de agentes (intenção, contexto, dados, critério de sucesso, autonomia com limites, observação, supervisão) — entrevista de 7 perguntas, nível de autonomia N0–N4 calculado, instrução pronta, 3 testes e checklist, gravados em AGENTE.md. Também AUDITA um prompt/CLAUDE.md/AGENTS.md existente contra os 7 princípios. Gatilhos: "/ficha-agente", "ficha do agente", "montar um agente pra X", "delegar essa tarefa pra IA", "que nível de autonomia", "audita meu agente/prompt".
+description: "Monta a FICHA DO AGENTE de uma tarefa delegada a IA pelos 7 princípios da gestão de agentes (intenção, contexto, dados, critério de sucesso, autonomia com limites, observação, supervisão) — entrevista de 7 perguntas, nível de autonomia N0–N4 calculado, instrução pronta, 3 testes e checklist, gravados em AGENTE.md. Também AUDITA um prompt/CLAUDE.md/AGENTS.md existente contra os 7 princípios. Gatilhos: \"/ficha-agente\", \"ficha do agente\", \"montar um agente pra X\", \"delegar essa tarefa pra IA\", \"que nível de autonomia\", \"audita meu agente/prompt\"."
 ---
 
 # ficha-agente
